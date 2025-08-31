@@ -1,0 +1,15 @@
+{
+	"square_seat": {
+		"size": [0.5, 0.4, 0.5]
+
+	},
+	"square_seat_backrest": {
+		"size": [0.5, 0.4, 0.5]
+	},
+	"low_table": {
+		"size": [1.6, 0.3, 0.8]
+	},
+	"explanatory_illustration": {
+		"size": [2.0, 3.0, 0.2]
+	}
+}

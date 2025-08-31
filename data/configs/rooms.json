@@ -1,0 +1,489 @@
+{
+	"01_tutorial": {
+		"default_assignment": [],
+		"display_name": "座席に座ってみましょう",
+		"exit_position": [5.0, 0.0, 5.0],
+		"player_spawn_position": [0.5, 0.0, 2.0],
+		"player_spawn_rotation": 90.0,
+		"seats": [
+			{
+				"display_name": "01", "id": "seat_01",
+				"mesh_id": "square_seat_backrest",
+				"position": [4.1, 0.0, 3.0],
+				"rotation": 270.0
+			},
+			{
+				"display_name": "picture", "id": "picture_01",
+				"mesh_id": "explanatory_illustration",
+				"position": [6.0, 0.0, 3.0],
+				"rotation": 270.0
+			}
+		],
+		"size": [6.0, 3.4, 6.0]
+	},
+	"02_tutorial": {
+		"default_assignment": [
+			{
+				"npc_id": "veskal",
+				"seat_id": "seat_01"
+			}
+		],
+		"display_name": "誰かが座っていますね",
+		"exit_position": [1.0, 0.0, 1.0],
+		"player_spawn_position": [4.5, 0.0, 4.0],
+		"player_spawn_rotation": 315.0,
+		"seats": [
+			{
+				"display_name": "01", "id": "seat_01",
+				"mesh_id": "square_seat_backrest",
+				"position": [0.9, 0.0, 2.8],
+				"rotation": 90.0
+			},
+			{
+				"display_name": "02", "id": "seat_02",
+				"mesh_id": "square_seat_backrest",
+				"position": [0.9, 0.0, 2.2],
+				"rotation": 90.0
+			},
+			{
+				"display_name": "03", "id": "seat_03",
+				"mesh_id": "square_seat_backrest",
+				"position": [0.9, 0.0, 1.6],
+				"rotation": 90.0
+			}
+		],
+		"size": [5.0, 3.5, 5.7]
+	},
+	"03_circle": {
+		"default_assignment": [
+			{
+				"npc_id": "enkura",
+				"seat_id": "seat_03"
+			}
+		],
+		"display_name": "Circle",
+		"exit_position": [11.0, 0.0, 5.0],
+		"player_spawn_position": [0.6, 0.0, 1.9],
+		"player_spawn_rotation": 90.0,
+		"seats": [
+			{
+				"display_name": "01", "id": "seat_01",
+				"mesh_id": "square_seat_backrest",
+				"position": [2.2, 0.0, 4.0],
+				"rotation": 90.0
+			},
+			{
+				"display_name": "02", "id": "seat_02",
+				"mesh_id": "square_seat_backrest",
+				"position": [2.7, 0.0, 2.7],
+				"rotation": 45.0
+			},
+			{
+				"display_name": "03", "id": "seat_03",
+				"mesh_id": "square_seat_backrest",
+				"position": [4.0, 0.0, 2.2],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "04", "id": "seat_04",
+				"mesh_id": "square_seat_backrest",
+				"position": [5.3, 0.0, 2.7],
+				"rotation": -45.0
+			},
+			{
+				"display_name": "05", "id": "seat_05",
+				"mesh_id": "square_seat_backrest",
+				"position": [5.8, 0.0, 4.0],
+				"rotation": -90.0
+			},
+			{
+				"display_name": "06", "id": "seat_06",
+				"mesh_id": "square_seat_backrest",
+				"position": [5.3, 0.0, 5.3],
+				"rotation": -135.0
+			},
+			{
+				"display_name": "07", "id": "seat_07",
+				"mesh_id": "square_seat_backrest",
+				"position": [4.0, 0.0, 5.8],
+				"rotation": 180.0
+			},
+			{
+				"display_name": "08", "id": "seat_08",
+				"mesh_id": "square_seat_backrest",
+				"position": [2.7, 0.0, 5.3],
+				"rotation": 135.0
+			}
+		],
+		"size": [8.0, 3.4, 8.0]
+	},
+	"04_phalanx": {
+		"default_assignment": [
+			{
+				"npc_id": "jarven",
+				"seat_id": "seat_08"
+			}
+		],
+		"display_name": "Phalanx",
+		"exit_position": [14.0, 0.0, 6.0],
+		"player_spawn_position": [6.9, 0.0, 6.0],
+		"player_spawn_rotation": 315.0,
+		"seats": [
+			{
+				"display_name": "01", "id": "seat_01",
+				"mesh_id": "square_seat",
+				"position": [2.4, 0.0, 2.0],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "02", "id": "seat_02",
+				"mesh_id": "square_seat",
+				"position": [3.2, 0.0, 2.0],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "03", "id": "seat_03",
+				"mesh_id": "square_seat",
+				"position": [4.0, 0.0, 2.0],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "04", "id": "seat_04",
+				"mesh_id": "square_seat",
+				"position": [4.8, 0.0, 2.0],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "05", "id": "seat_05",
+				"mesh_id": "square_seat",
+				"position": [5.6, 0.0, 2.0],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "06", "id": "seat_06",
+				"mesh_id": "square_seat",
+				"position": [2.4, 0.0, 3.3],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "07", "id": "seat_07",
+				"mesh_id": "square_seat",
+				"position": [3.2, 0.0, 3.3],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "08", "id": "seat_08",
+				"mesh_id": "square_seat",
+				"position": [4.0, 0.0, 3.3],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "09", "id": "seat_09",
+				"mesh_id": "square_seat",
+				"position": [4.8, 0.0, 3.3],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "10", "id": "seat_10",
+				"mesh_id": "square_seat",
+				"position": [5.6, 0.0, 3.3],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "11", "id": "seat_11",
+				"mesh_id": "square_seat",
+				"position": [2.4, 0.0, 4.6],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "12", "id": "seat_12",
+				"mesh_id": "square_seat",
+				"position": [3.2, 0.0, 4.6],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "13", "id": "seat_13",
+				"mesh_id": "square_seat",
+				"position": [4.0, 0.0, 4.6],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "14", "id": "seat_14",
+				"mesh_id": "square_seat",
+				"position": [4.8, 0.0, 4.6],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "15", "id": "seat_15",
+				"mesh_id": "square_seat",
+				"position": [5.6, 0.0, 4.6],
+				"rotation": 0.0
+			}
+		],
+		"size": [8.0, 3.6, 7.0]
+	},
+	"05_island": {
+		"default_assignment": [
+			{
+				"npc_id": "lumeth",
+				"seat_id": "seat_05"
+			}
+		],
+		"display_name": "島",
+		"exit_position": [5.0, 0.0, 5.0],
+		"player_spawn_position": [0.6, 0.0, 5.4],
+		"player_spawn_rotation": 45.0,
+		"seats": [
+			{
+				"display_name": "01", "id": "seat_01",
+				"mesh_id": "square_seat",
+				"position": [3.0, 0.0, 2.3],
+				"rotation": 180.0
+			},
+			{
+				"display_name": "02", "id": "seat_02",
+				"mesh_id": "square_seat",
+				"position": [3.5, 0.0, 2.3],
+				"rotation": 180.0
+			},
+			{
+				"display_name": "03", "id": "seat_03",
+				"mesh_id": "square_seat",
+				"position": [4.0, 0.0, 2.3],
+				"rotation": 180.0
+			},
+			{
+				"display_name": "04", "id": "seat_04",
+				"mesh_id": "square_seat",
+				"position": [3.0, 0.0, 2.8],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "05", "id": "seat_05",
+				"mesh_id": "square_seat",
+				"position": [3.5, 0.0, 2.8],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "06", "id": "seat_06",
+				"mesh_id": "square_seat",
+				"position": [3.0, 0.0, 4.6],
+				"rotation": 180.0
+			},
+			{
+				"display_name": "07", "id": "seat_07",
+				"mesh_id": "square_seat",
+				"position": [3.5, 0.0, 4.6],
+				"rotation": 180.0
+			},
+			{
+				"display_name": "08", "id": "seat_08",
+				"mesh_id": "square_seat",
+				"position": [4.0, 0.0, 4.6],
+				"rotation": 180.0
+			},
+			{
+				"display_name": "09", "id": "seat_09",
+				"mesh_id": "square_seat",
+				"position": [4.0, 0.0, 2.8],
+				"rotation": 0.0
+			}
+		],
+		"size": [7.0, 3.4, 6.0]
+	},
+	"06_face_to_face": {
+		"default_assignment": [
+			{
+				"npc_id": "enkura",
+				"seat_id": "seat_03"
+			}
+		],
+		"display_name": "Face to face",
+		"exit_position": [7.0, 0.0, 3.0],
+		"player_spawn_position": [0.6, 0.0, 2.3],
+		"player_spawn_rotation": 90.0,
+		"seats": [
+			{
+				"display_name": "01", "id": "seat_01",
+				"mesh_id": "square_seat_backrest",
+				"position": [3.0, 0.0, 1.4],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "02", "id": "seat_02",
+				"mesh_id": "square_seat_backrest",
+				"position": [3.6, 0.0, 1.4],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "03", "id": "seat_03",
+				"mesh_id": "square_seat_backrest",
+				"position": [4.2, 0.0, 1.4],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "04", "id": "seat_04",
+				"mesh_id": "square_seat_backrest",
+				"position": [4.8, 0.0, 1.4],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "05", "id": "seat_06",
+				"mesh_id": "square_seat_backrest",
+				"position": [5.4, 0.0, 1.4],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "06", "id": "seat_07",
+				"mesh_id": "square_seat_backrest",
+				"position": [3.0, 0.0, 3.3],
+				"rotation": 180.0
+			},
+			{
+				"display_name": "07", "id": "seat_08",
+				"mesh_id": "square_seat_backrest",
+				"position": [3.6, 0.0, 3.3],
+				"rotation": 180.0
+			},
+			{
+				"display_name": "08", "id": "seat_09",
+				"mesh_id": "square_seat_backrest",
+				"position": [4.2, 0.0, 3.3],
+				"rotation": 180.0
+			},
+			{
+				"display_name": "09", "id": "seat_10",
+				"mesh_id": "square_seat_backrest",
+				"position": [4.8, 0.0, 3.3],
+				"rotation": 180.0
+			},
+			{
+				"display_name": "10", "id": "seat_11",
+				"mesh_id": "square_seat_backrest",
+				"position": [5.4, 0.0, 3.3],
+				"rotation": 180.0
+			}
+		],
+		"size": [7.0, 3.2, 5.0]
+	},
+	"07_angled": {
+		"default_assignment": [
+			{
+				"npc_id": "jarven",
+				"seat_id": "seat_03"
+			}
+		],
+		"display_name": "Angled",
+		"exit_position": [7.0, 0.0, 3.0],
+		"player_spawn_position": [4.5, 0.0, 4.3],
+		"player_spawn_rotation": 315.0,
+		"seats": [
+			{
+				"display_name": "01", "id": "seat_01",
+				"mesh_id": "square_seat",
+				"position": [1.8, 0.0, 2.4],
+				"rotation": 45.0
+			},
+			{
+				"display_name": "02", "id": "seat_02",
+				"mesh_id": "square_seat",
+				"position": [2.3, 0.0, 1.9],
+				"rotation": 45.0
+			},
+			{
+				"display_name": "03", "id": "seat_03",
+				"mesh_id": "square_seat",
+				"position": [3.2, 0.0, 1.5],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "04", "id": "seat_04",
+				"mesh_id": "square_seat",
+				"position": [3.9, 0.0, 1.5],
+				"rotation": 0.0
+			},
+			{
+				"display_name": "05", "id": "seat_06",
+				"mesh_id": "square_seat",
+				"position": [4.6, 0.0, 1.5],
+				"rotation": 0.0
+			}
+		],
+		"size": [6.6, 3.2, 5.0]
+	},
+	"room_table": {
+		"default_assignment": [
+			{
+				"npc_id": "jarven",
+				"seat_id": "seat_08"
+			}
+		],
+		"display_name": "テーブル",
+		"exit_position": [5.0, 0.0, 5.0],
+		"player_spawn_position": [0.5, 0.0, 2.0],
+		"player_spawn_rotation": 90.0,
+		"seats": [
+			{
+				"display_name": "01", "id": "seat_01",
+				"mesh_id": "square_seat_backrest",
+				"position": [2.8, 0.0, 5.6],
+				"rotation": 90.0
+			},
+			{
+				"display_name": "02", "id": "seat_02",
+				"mesh_id": "square_seat_backrest",
+				"position": [5.2, 0.0, 6.4],
+				"rotation": 270.0
+			},
+			{
+				"display_name": "03", "id": "seat_03",
+				"mesh_id": "square_seat_backrest",
+				"position": [5.2, 0.0, 5.6],
+				"rotation": 270.0
+			},
+			{
+				"display_name": "04", "id": "seat_04",
+				"mesh_id": "square_seat_backrest",
+				"position": [2.8, 0.0, 6.4],
+				"rotation": 90.0
+			},
+			{
+				"display_name": "05", "id": "seat_05",
+				"mesh_id": "square_seat_backrest",
+				"position": [2.8, 0.0, 1.6],
+				"rotation": 90.0
+			},
+			{
+				"display_name": "06", "id": "seat_06",
+				"mesh_id": "square_seat_backrest",
+				"position": [2.8, 0.0, 2.4],
+				"rotation": 90.0
+			},
+			{
+				"display_name": "07", "id": "seat_07",
+				"mesh_id": "square_seat_backrest",
+				"position": [5.2, 0.0, 2.4],
+				"rotation": 270.0
+			},
+			{
+				"display_name": "08", "id": "seat_08",
+				"mesh_id": "square_seat_backrest",
+				"position": [5.2, 0.0, 1.6],
+				"rotation": 270.0
+			},
+			{
+				"display_name": "01", "id": "table_01",
+				"mesh_id": "low_table",
+				"position": [4.0, 0.0, 2.0],
+				"rotation": 90.0
+			},
+			{
+				"display_name": "02", "id": "table_02",
+				"mesh_id": "low_table",
+				"position": [4.0, 0.0, 6.0],
+				"rotation": 90.0
+			}
+		],
+		"size": [6.8, 3.4, 8.0]
+	}
+}

@@ -1,0 +1,65 @@
+{
+  "dialogs": {
+    "room_selection_intro": {
+      "character": "guide",
+      "messages": [
+        "Room editでは、部屋のレイアウトを変更できます。\nこの画面で部屋を選択し、次の画面でレイアウトを調整してください。"
+      ]
+    },
+    "opening_narrative": {
+      "character": "guide",
+      "messages": [
+        "こんにちは。これからプロクセミクスの実験にご協力いただきます。"
+      ]
+    },
+    "01_tutorial": {
+      "character": "guide",
+      "messages": [
+       "コントローラーを使用して、前にある座席に座ってみてください。\n座席にお尻を向けてボタンを押すと座ることができます。"
+      ]
+    },
+    "02_tutorial": {
+      "character": "guide",
+      "messages": [
+        "もう少し練習しましょう。こんどは誰かが座っていますね。\n部屋にいる人は、全員「知らない人」だと思ってください。\nでは、空いている座席に座ってみてください。"
+      ]
+    },
+    "03_circle": {
+      "character": "guide",
+      "messages": [
+        "もし実験中に具合が悪くなったら、遠慮せず すぐにお知らせください。",
+        "さて、ここからは本番です。\n深く考え込まず「ふつうはここに座るな」と思った座席を選んでください。"
+      ]
+    },
+    "04_phalanx": {
+      "character": "guide",
+      "messages": [
+        "この部屋は劇場や教室のような座席の配置になっていますね。"
+      ]
+    },
+    "05_island": {
+      "character": "guide",
+      "messages": [
+        "この部屋には広い座席が1つだけ置いてありますね。"
+      ]
+    },
+    "06_face_to_face": {
+      "character": "guide",
+      "messages": [
+        "この部屋は横に並んだ座席が対面するように配置されていますね。"
+      ]
+    },
+    "07_angled": {
+      "character": "guide",
+      "messages": [
+        "この部屋は少し角度を付けて座席が並べられていますね。"
+      ]
+    },
+    "ending_narrative": {
+      "character": "guide",
+      "messages": [
+        "体験は以上です。ご協力ありがとうございました。"
+      ]
+    }
+  }
+}

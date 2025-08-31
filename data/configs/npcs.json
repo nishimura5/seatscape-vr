@@ -1,0 +1,52 @@
+{
+	"npcs": [
+		{
+			"animation_id": "sitting_idle",
+			"display_name": "Miroen-san",
+			"id": "miroen",
+			"mesh_id": "human_male_01"
+		},
+		{
+			"animation_id": "sitting_idle",
+			"display_name": "Tavolu-san",
+			"id": "tavolu",
+			"mesh_id": "human_female_01"
+		},
+		{
+			"animation_id": "sitting_idle",
+			"display_name": "Enkura-san",
+			"id": "enkura",
+			"mesh_id": "human_male_02"
+		},
+		{
+			"animation_id": "sitting_idle",
+			"display_name": "Sahiri-san",
+			"id": "sahiri",
+			"mesh_id": "human_female_02"
+		},
+		{
+			"animation_id": "sitting_idle",
+			"display_name": "Jarven-san",
+			"id": "jarven",
+			"mesh_id": "human_male_03"
+		},
+		{
+			"animation_id": "sitting_idle",
+			"display_name": "Olinu-san",
+			"id": "olinu",
+			"mesh_id": "human_female_03"
+		},
+		{
+			"animation_id": "sitting_idle",
+			"display_name": "Veskal-san",
+			"id": "veskal",
+			"mesh_id": "human_male_04"
+		},
+		{
+			"animation_id": "sitting_idle",
+			"display_name": "Lumeth-san",
+			"id": "lumeth",
+			"mesh_id": "human_female_04"
+		}
+	]
+}

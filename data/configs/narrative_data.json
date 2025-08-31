@@ -1,0 +1,8 @@
+{
+    "opening_narrative": {
+        "image_path": "res://data/images/narrative/opening.png"
+    },
+    "ending_narrative": {
+        "image_path": "res://data/images/narrative/ending.png"
+    }
+}

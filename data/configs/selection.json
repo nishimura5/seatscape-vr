@@ -1,0 +1,12 @@
+{
+	"for_edit": [
+		"opening_narrative", "01_tutorial", "02_tutorial", "03_circle", "04_phalanx", "05_island", "06_face_to_face", "07_angled", "ending_narrative"
+	],
+	"for_scenario": [
+		"opening_narrative", "01_tutorial", "02_tutorial", "03_circle", "04_phalanx", "05_island", "06_face_to_face", "07_angled", "ending_narrative"
+	],
+        "for_experiment":{
+                "pattern01": ["opening_narrative", "01_tutorial", "02_tutorial", "ending_narrative"],
+                "pattern02": ["03_circle", "ending_narrative"]
+        }
+}

@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bxample123456"]
+
+[ext_resource type="Shader" uid="uid://bctajqqh8klqj" path="res://tres/toon_shader.gdshader" id="1"]
+[ext_resource type="Texture2D" uid="uid://dheephaudehdt" path="res://data/3d/textures/human_uv.png" id="2"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1")
+shader_parameter/albedo_texture = ExtResource("2")
+shader_parameter/light_direction = Vector3(0, -1, -1)
+shader_parameter/shade_threshold = 0.3
+shader_parameter/dark_shade = 0.8

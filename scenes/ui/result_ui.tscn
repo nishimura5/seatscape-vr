@@ -1,0 +1,108 @@
+[gd_scene load_steps=2 format=3 uid="uid://wba10kmwy7j2"]
+
+[ext_resource type="Script" uid="uid://bh4cnbndfri0k" path="res://scripts/ui/result_ui.gd" id="1_result_ui"]
+
+[node name="ResultUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_result_ui")
+
+[node name="BackgroundPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -200.0
+offset_right = 400.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainContainer" type="VBoxContainer" parent="BackgroundPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -199.5
+offset_top = -148.5
+offset_right = 199.5
+offset_bottom = 148.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="BackgroundPanel/MainContainer"]
+layout_mode = 2
+text = "結果"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreContainer" type="VBoxContainer" parent="BackgroundPanel/MainContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="IntimateViolationScore" type="HBoxContainer" parent="BackgroundPanel/MainContainer/ScoreContainer"]
+layout_mode = 2
+
+[node name="IntimateLabel" type="Label" parent="BackgroundPanel/MainContainer/ScoreContainer/IntimateViolationScore"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Invasion:"
+
+[node name="IntimateValue" type="Label" parent="BackgroundPanel/MainContainer/ScoreContainer/IntimateViolationScore"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 2
+
+[node name="SeatZoneScore" type="HBoxContainer" parent="BackgroundPanel/MainContainer/ScoreContainer"]
+layout_mode = 2
+
+[node name="SeatZoneLabel" type="Label" parent="BackgroundPanel/MainContainer/ScoreContainer/SeatZoneScore"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "座席位置:"
+
+[node name="SeatZoneValue" type="Label" parent="BackgroundPanel/MainContainer/ScoreContainer/SeatZoneScore"]
+layout_mode = 2
+text = "適切"
+horizontal_alignment = 2
+
+[node name="DirectionScore" type="HBoxContainer" parent="BackgroundPanel/MainContainer/ScoreContainer"]
+layout_mode = 2
+
+[node name="DirectionLabel" type="Label" parent="BackgroundPanel/MainContainer/ScoreContainer/DirectionScore"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "視線方向:"
+
+[node name="DirectionValue" type="Label" parent="BackgroundPanel/MainContainer/ScoreContainer/DirectionScore"]
+layout_mode = 2
+text = "良好"
+horizontal_alignment = 2
+
+[node name="ButtonContainer" type="HBoxContainer" parent="BackgroundPanel/MainContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="NextButton" type="Button" parent="BackgroundPanel/MainContainer/ButtonContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Next room"
+
+[node name="RetryButton" type="Button" parent="BackgroundPanel/MainContainer/ButtonContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Retry"
+
+[node name="BackToMenuButton" type="Button" parent="BackgroundPanel/MainContainer/ButtonContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Back to Menu"

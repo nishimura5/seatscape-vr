@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://c3pm3tnvexfrv"]
+
+[ext_resource type="Script" uid="uid://cs07bw636s5o4" path="res://scripts/scenes/seating/seating.gd" id="1_pq2qf"]
+[ext_resource type="Script" uid="uid://dvnyblhhr1yy7" path="res://scripts/scenes/seating/seating_environment.gd" id="2_l6j5s"]
+[ext_resource type="Script" uid="uid://cuxslkoqwgg74" path="res://scripts/scenes/seating/player_path.gd" id="3_l6j5s"]
+[ext_resource type="PackedScene" uid="uid://dmkqbpusuclij" path="res://scenes/3d/desktop_player_3d.tscn" id="4_tir6n"]
+[ext_resource type="PackedScene" uid="uid://cqh0poxngdc4s" path="res://scenes/3d/xr_player_3d.tscn" id="5_tir6n"]
+[ext_resource type="PackedScene" uid="uid://wba10kmwy7j2" path="res://scenes/ui/result_ui.tscn" id="8_result_ui"]
+
+[sub_resource type="Environment" id="Environment_kx80a"]
+
+[node name="Seating" type="Node3D"]
+process_mode = 1
+script = ExtResource("1_pq2qf")
+metadata/_edit_horizontal_guides_ = [-292.0]
+
+[node name="Environment" type="Node3D" parent="."]
+script = ExtResource("2_l6j5s")
+
+[node name="RoomMesh" type="MeshInstance3D" parent="Environment"]
+
+[node name="SeatsContainer" type="Node3D" parent="Environment"]
+
+[node name="NpcsContainer" type="Node3D" parent="Environment"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_kx80a")
+
+[node name="LightmapGI" type="LightmapGI" parent="Environment"]
+quality = 2
+interior = true
+
+[node name="PlayerPath" type="Node3D" parent="Environment"]
+script = ExtResource("3_l6j5s")
+
+[node name="PlayerManager" type="Node3D" parent="."]
+
+[node name="DesktopPlayer3D" parent="PlayerManager" instance=ExtResource("4_tir6n")]
+
+[node name="XrPlayer3D" parent="PlayerManager" instance=ExtResource("5_tir6n")]
+
+[node name="OverviewCamera" type="Camera3D" parent="."]
+
+[node name="UIManager" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="UIOverlay" type="CanvasLayer" parent="UIManager"]
+
+[node name="ResultUI" parent="UIManager/UIOverlay" instance=ExtResource("8_result_ui")]

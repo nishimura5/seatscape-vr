@@ -1,0 +1,92 @@
+[gd_scene load_steps=5 format=3 uid="uid://covbf2saoexlh"]
+
+[ext_resource type="Script" uid="uid://beykdyj8jgnb8" path="res://scripts/scenes/assignment/assignment.gd" id="1_e70hn"]
+[ext_resource type="Script" uid="uid://cmu3tcr44op5r" path="res://scripts/scenes/assignment/assignment_world.gd" id="2_wq4el"]
+[ext_resource type="Theme" uid="uid://cymem6u3gnfol" path="res://tres/main_theme.tres" id="3_e70hn"]
+[ext_resource type="Texture2D" uid="uid://dt36s7yai7yvh" path="res://data/images/preview_frame.svg" id="3_wq4el"]
+
+[node name="Assignment" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e70hn")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AssignmentWorldContainer" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 7.0
+
+[node name="AssignmentWorld" type="Node2D" parent="HBoxContainer/AssignmentWorldContainer"]
+script = ExtResource("2_wq4el")
+
+[node name="RoomBackground" type="NinePatchRect" parent="HBoxContainer/AssignmentWorldContainer/AssignmentWorld"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PoolBackground" type="NinePatchRect" parent="HBoxContainer/AssignmentWorldContainer/AssignmentWorld"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SeatsContainer" type="Node2D" parent="HBoxContainer/AssignmentWorldContainer/AssignmentWorld"]
+
+[node name="NpcsContainer" type="Node2D" parent="HBoxContainer/AssignmentWorldContainer/AssignmentWorld"]
+
+[node name="PreviewFrame" type="TextureRect" parent="HBoxContainer/AssignmentWorldContainer/AssignmentWorld"]
+custom_minimum_size = Vector2(270, 290)
+offset_right = 256.0
+offset_bottom = 256.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("3_wq4el")
+expand_mode = 1
+
+[node name="PreviewImage" type="TextureRect" parent="HBoxContainer/AssignmentWorldContainer/AssignmentWorld"]
+custom_minimum_size = Vector2(260, 260)
+offset_right = 260.0
+offset_bottom = 260.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="UIControls" type="VBoxContainer" parent="HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+theme = ExtResource("3_e70hn")
+
+[node name="StartSeatingButton" type="Button" parent="HBoxContainer/MarginContainer/UIControls"]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="HBoxContainer/MarginContainer/UIControls"]
+layout_mode = 2
+
+[node name="SaveButton" type="Button" parent="HBoxContainer/MarginContainer/UIControls"]
+layout_mode = 2
+
+[node name="ClearButton" type="Button" parent="HBoxContainer/MarginContainer/UIControls"]
+layout_mode = 2
+
+[node name="DragPreview" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DragNpcSprite" type="Sprite2D" parent="DragPreview"]

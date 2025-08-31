@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=3 uid="uid://c7d8faf0g1h2i"]
+
+[ext_resource type="Script" uid="uid://dhba0hc0w76bg" path="res://scripts/scenes/seating/3d/npc_3d.gd" id="1_gab3e"]
+
+[node name="NPC3D" type="Node3D"]
+script = ExtResource("1_gab3e")
+
+[node name="NameLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+pixel_size = 0.001
+billboard = 1
+alpha_antialiasing_edge = 0.01
+text = "NPC"
+font_size = 80
+outline_size = 28
+
+[node name="NpcMesh" type="Node3D" parent="."]
+
+[node name="PersonalSpaceContainer" type="Node3D" parent="."]
+
+[node name="IntimateAreaDetector" type="Area3D" parent="PersonalSpaceContainer"]
+
+[node name="IntimateCollision" type="CollisionShape3D" parent="PersonalSpaceContainer/IntimateAreaDetector"]
+
+[node name="IntimateVisual" type="MeshInstance3D" parent="PersonalSpaceContainer/IntimateAreaDetector"]
+
+[node name="PersonalAreaDetector" type="Area3D" parent="PersonalSpaceContainer"]
+
+[node name="PersonalCollision" type="CollisionShape3D" parent="PersonalSpaceContainer/PersonalAreaDetector"]
+
+[node name="PersonalVisual" type="MeshInstance3D" parent="PersonalSpaceContainer/PersonalAreaDetector"]
+
+[node name="SocialAreaDetector" type="Area3D" parent="PersonalSpaceContainer"]
+
+[node name="SocialCollision" type="CollisionShape3D" parent="PersonalSpaceContainer/SocialAreaDetector"]
+
+[node name="SocialVisual" type="MeshInstance3D" parent="PersonalSpaceContainer/SocialAreaDetector"]
+
+[node name="BlenderImport" type="Node3D" parent="."]
+visible = false
+
+[node name="PersonalSpaceMesh" type="Node3D" parent="BlenderImport"]

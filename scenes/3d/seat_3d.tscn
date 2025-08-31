@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bq8x5m2p3d4k1"]
+
+[ext_resource type="Script" uid="uid://c3md35iylhuim" path="res://scripts/scenes/seating/3d/seat_3d.gd" id="1_kgmv5"]
+
+[node name="Seat3D" type="Node3D"]
+script = ExtResource("1_kgmv5")
+
+[node name="AvailableAreaDetector" type="Area3D" parent="."]
+
+[node name="AvailableAreaCollision" type="CollisionShape3D" parent="AvailableAreaDetector"]

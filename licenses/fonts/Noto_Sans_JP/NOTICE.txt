@@ -1,0 +1,6 @@
+Noto Sans JP
+Copyright © Google LLC and other contributors
+Portions © Adobe
+Licensed under the SIL Open Font License, Version 1.1
+See OFL.txt for the full text of the license.
+Source: https://fonts.google.com/noto/specimen/Noto+Sans+JP

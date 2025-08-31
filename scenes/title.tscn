@@ -1,0 +1,89 @@
+[gd_scene load_steps=4 format=3 uid="uid://lsqda65p6563"]
+
+[ext_resource type="Script" uid="uid://cdk2a3ppgu72o" path="res://scripts/scenes/title/title.gd" id="1_4ignj"]
+[ext_resource type="Texture2D" uid="uid://pk3p4lpb1es4" path="res://data/images/title.png" id="2_wosw1"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_wosw1"]
+size = Vector2(3.2, 1.8)
+
+[node name="Title" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4ignj")
+
+[node name="SharedUI" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackgroundTexture" type="TextureRect" parent="SharedUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_wosw1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SharedUI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -192.5
+offset_top = -160.0
+offset_right = 192.5
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SharedUI/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="ScenarioButton" type="Button" parent="SharedUI/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(120, 50)
+layout_mode = 2
+text = "Demo
+"
+
+[node name="ExperimentButton" type="Button" parent="SharedUI/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(120, 50)
+layout_mode = 2
+text = "Experiment
+"
+
+[node name="RoomEditButton" type="Button" parent="SharedUI/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(120, 50)
+layout_mode = 2
+text = "Room edit"
+
+[node name="XRUI" type="Node3D" parent="."]
+
+[node name="XROrigin3D" type="XROrigin3D" parent="XRUI"]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XRUI/XROrigin3D"]
+
+[node name="LeftController" type="XRController3D" parent="XRUI/XROrigin3D"]
+tracker = &"left_hand"
+
+[node name="RightController" type="XRController3D" parent="XRUI/XROrigin3D"]
+tracker = &"right_hand"
+
+[node name="UIPanel" type="Node3D" parent="XRUI"]
+
+[node name="PanelMesh" type="MeshInstance3D" parent="XRUI/UIPanel"]
+mesh = SubResource("QuadMesh_wosw1")
+skeleton = NodePath("../..")
+
+[node name="SubViewport" type="SubViewport" parent="XRUI/UIPanel"]
+size = Vector2i(1920, 1080)

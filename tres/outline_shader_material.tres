@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dritf0ii20r4d"]
+
+[ext_resource type="Shader" uid="uid://78acp7b3fha8" path="res://tres/outline_shader.gdshader" id="1"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1")
+shader_parameter/outline_width = 0.004
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/edge_detection_threshold = 0.3
+shader_parameter/max_outline_distance = 50.0
+shader_parameter/adaptive_width = true
+shader_parameter/sharp_edge_multiplier = 1.5

@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=3 uid="uid://dmkqbpusuclij"]
+
+[ext_resource type="Script" uid="uid://ch25m7jaytri0" path="res://scripts/scenes/seating/3d/desktop_player_3d.gd" id="1_wbuwe"]
+[ext_resource type="PackedScene" uid="uid://bvpnxbqyuutkv" path="res://data/3d/player.blend" id="2_krfnl"]
+[ext_resource type="Script" uid="uid://cximc26fn7ju2" path="res://scripts/scenes/seating/back_area_detector.gd" id="3_m3a67"]
+[ext_resource type="Script" uid="uid://c2vtdebm0rkva" path="res://scripts/scenes/seating/personal_space_detector.gd" id="4_vkir4"]
+[ext_resource type="Texture2D" uid="uid://c1o8xka0o302d" path="res://data/icons/can_sit_icon.svg" id="5_krfnl"]
+[ext_resource type="PackedScene" uid="uid://bsebevtfokfkx" path="res://scenes/ui/dialog_system.tscn" id="5_m3a67"]
+[ext_resource type="PackedScene" uid="uid://wba10kmwy7j2" path="res://scenes/ui/result_ui.tscn" id="7_vkir4"]
+
+[node name="DesktopPlayer3D" type="CharacterBody3D"]
+script = ExtResource("1_wbuwe")
+
+[node name="player" parent="." instance=ExtResource("2_krfnl")]
+
+[node name="PlayerCollision" type="CollisionShape3D" parent="."]
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+
+[node name="BackAreaDetector" type="Area3D" parent="."]
+script = ExtResource("3_m3a67")
+
+[node name="BackAreaCollision" type="CollisionShape3D" parent="BackAreaDetector"]
+
+[node name="PersonalSpaceDetector" type="Area3D" parent="."]
+script = ExtResource("4_vkir4")
+
+[node name="PersonalSpaceCollision" type="CollisionShape3D" parent="PersonalSpaceDetector"]
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="DialogSystem" parent="UILayer" instance=ExtResource("5_m3a67")]
+
+[node name="CanSitDownIcon" type="TextureRect" parent="UILayer"]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -35.0
+offset_top = -110.0
+offset_right = 35.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("5_krfnl")
+
+[node name="DissolveOverlay" type="ColorRect" parent="UILayer"]
+visible = false
+modulate = Color(0, 0, 0, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="UIOverlay" type="CanvasLayer" parent="UILayer"]
+
+[node name="ResultUI" parent="UILayer/UIOverlay" instance=ExtResource("7_vkir4")]

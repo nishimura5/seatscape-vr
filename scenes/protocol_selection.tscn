@@ -1,0 +1,107 @@
+[gd_scene load_steps=4 format=3 uid="uid://dnevnfqg6kvqw"]
+
+[ext_resource type="Script" uid="uid://d0i6jqm8w43a3" path="res://scripts/scenes/room_selection/protocol_selection.gd" id="1_xe0vn"]
+[ext_resource type="PackedScene" uid="uid://bsebevtfokfkx" path="res://scenes/ui/dialog_system.tscn" id="2_jtrrp"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_xe0vn"]
+size = Vector2(3.2, 1.8)
+
+[node name="RoomSelection" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xe0vn")
+
+[node name="SharedUI" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackgroundColorRect" type="ColorRect" parent="SharedUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.797659, 0.797658, 0.797659, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="SharedUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainHBoxContainer" type="HBoxContainer" parent="SharedUI/CenterContainer"]
+layout_mode = 2
+
+[node name="BackToTitleButton" type="Button" parent="SharedUI/CenterContainer/MainHBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SharedUI/CenterContainer/MainHBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 170)
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SharedUI/CenterContainer/MainHBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(10, 500)
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="ProtocolOptionsContainer" type="VBoxContainer" parent="SharedUI/CenterContainer/MainHBoxContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="MessagePanel" type="PanelContainer" parent="SharedUI/CenterContainer/MainHBoxContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SharedUI/CenterContainer/MainHBoxContainer/MessagePanel"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="SharedUI/CenterContainer/MainHBoxContainer/MessagePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="MessageLabel" type="Label" parent="SharedUI/CenterContainer/MainHBoxContainer/MessagePanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
+[node name="ConfirmButton" type="Button" parent="SharedUI/CenterContainer/MainHBoxContainer"]
+layout_mode = 2
+
+[node name="DialogSystem" parent="SharedUI" instance=ExtResource("2_jtrrp")]
+layout_mode = 1
+offset_left = 40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = -40.0
+
+[node name="XRUI" type="Node3D" parent="."]
+
+[node name="XROrigin3D" type="XROrigin3D" parent="XRUI"]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XRUI/XROrigin3D"]
+
+[node name="LeftController" type="XRController3D" parent="XRUI/XROrigin3D"]
+tracker = &"left_hand"
+
+[node name="RightController" type="XRController3D" parent="XRUI/XROrigin3D"]
+tracker = &"right_hand"
+
+[node name="UIPanel" type="Node3D" parent="XRUI"]
+
+[node name="PanelMesh" type="MeshInstance3D" parent="XRUI/UIPanel"]
+mesh = SubResource("QuadMesh_xe0vn")
+skeleton = NodePath("../..")
+
+[node name="SubViewport" type="SubViewport" parent="XRUI/UIPanel"]
+size = Vector2i(1920, 1080)

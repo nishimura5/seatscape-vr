@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://lk4wphm5ixl"]
+
+[ext_resource type="Script" uid="uid://bta1xte3bjqx8" path="res://scripts/ui/seat_icon.gd" id="1_seat_icon"]
+
+[node name="SeatIcon" type="Sprite2D"]
+script = ExtResource("1_seat_icon")
+
+[node name="SeatLabel" type="Label" parent="."]
+offset_top = -15.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="OccupiedIndicator" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(15, -15)
+scale = Vector2(0.4, 0.4)

@@ -1,0 +1,75 @@
+[gd_scene load_steps=3 format=3 uid="uid://dem8ji87cx7ov"]
+
+[ext_resource type="Script" uid="uid://cmwl5uxmqqd0m" path="res://scripts/scenes/room_selection/room_selection.gd" id="1_cs5ee"]
+[ext_resource type="PackedScene" uid="uid://bsebevtfokfkx" path="res://scenes/ui/dialog_system.tscn" id="2_pcjxc"]
+
+[node name="RoomSelection" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cs5ee")
+
+[node name="BackgroundColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.797659, 0.797658, 0.797659, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainHBoxContainer" type="HBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="BackToTitleButton" type="Button" parent="CenterContainer/MainHBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/MainHBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 170)
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/MainHBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(10, 500)
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="RoomOptionsContainer" type="VBoxContainer" parent="CenterContainer/MainHBoxContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="MessagePanel" type="PanelContainer" parent="CenterContainer/MainHBoxContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/MainHBoxContainer/MessagePanel"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/MainHBoxContainer/MessagePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="MessageLabel" type="Label" parent="CenterContainer/MainHBoxContainer/MessagePanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
+[node name="ConfirmButton" type="Button" parent="CenterContainer/MainHBoxContainer"]
+layout_mode = 2
+
+[node name="DialogSystem" parent="." instance=ExtResource("2_pcjxc")]
+layout_mode = 1
+offset_left = 40.0
+offset_top = -1080.0
+offset_right = 40.0
+offset_bottom = -1080.0

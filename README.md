@@ -15,6 +15,24 @@ SeatScape VRはGodot4.4を使用して開発しています。実行する際は
  - Windows11
  - MetaQuest(PCVR)
 
+## Screen shot
+
+<p align="center">
+<img src="https://www.design.kyushu-u.ac.jp/~eigo/image/seatscape-vr/circle_2d.webp" width="70%">
+<br>
+<img src="https://www.design.kyushu-u.ac.jp/~eigo/image/seatscape-vr/circle_3d.webp" width="70%">
+<br>
+<img src="https://www.design.kyushu-u.ac.jp/~eigo/image/seatscape-vr/circle_3d_2.webp" width="70%">
+<br>
+<img src="https://www.design.kyushu-u.ac.jp/~eigo/image/seatscape-vr/circle_3d_3.webp" width="70%">
+<br>
+<img src="https://www.design.kyushu-u.ac.jp/~eigo/image/seatscape-vr/isle_2d.webp" width="70%">
+<br>
+<img src="https://www.design.kyushu-u.ac.jp/~eigo/image/seatscape-vr/isle_3d.webp" width="70%">
+<br>
+<img src="https://www.design.kyushu-u.ac.jp/~eigo/image/seatscape-vr/tables_3d.webp" width="70%">
+</p>
+
 ## 設定ファイル
 
 部屋や座席の作成はdata/configsフォルダ内のjsonファイルに記述します。

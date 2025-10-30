@@ -70,30 +70,22 @@ func set_npc_data(npc: NpcRepository.Npc):
 func apply_npc_data(npc: NpcRepository.Npc):
     name_label.text = npc.display_name
 
-    var random_seek_time = randf_range(20.0, 120.0)
+#    var random_seek_time = randf_range(20.0, 120.0)
 
-    npc_mesh.position.y = -0.0
+    npc_mesh.position.y = 0.2
     name_label.position.y -= 0.3
 
     # toon shader setup
-    var body_mesh = npc_mesh.get_node("Armature01/Skeleton3D/body")
+    var body_mesh = npc_mesh.get_node("rig/Skeleton3D/Body")
     apply_toon_outline_to_mesh(body_mesh)
-    var head_mesh = npc_mesh.get_node("Armature01/Skeleton3D/head")
-    apply_toon_outline_to_mesh(head_mesh)
-    var wear_mesh = npc_mesh.get_node("Armature01/Skeleton3D/wear1")
-    apply_toon_outline_to_mesh(wear_mesh)
-    var feet_mesh = npc_mesh.get_node("Armature01/Skeleton3D/feet")
-    apply_toon_outline_to_mesh(feet_mesh)
-
-    # unvisible hand
-    var hand_mesh = npc_mesh.get_node("Armature01/Skeleton3D/hand")
-    hand_mesh.visible = false
+#    var wear_mesh = npc_mesh.get_node("Armature01/Skeleton3D/wear1")
+#    apply_toon_outline_to_mesh(wear_mesh)
 
     # animation setup
     var animator_player = npc_mesh.get_node_or_null("AnimationPlayer")
     if animator_player:
-        animator_player.play("Anim_0")
-        animator_player.seek(random_seek_time, true)
+        animator_player.play("Sitting")
+#        animator_player.seek(random_seek_time, true)
 
 func apply_toon_outline_to_mesh(mesh_instance: MeshInstance3D):
     """

@@ -37,20 +37,21 @@ func load_avatar_texture():
     if not npc_data:
         return
     texture_load_attempted = true
-    
-    # NPCのメッシュIDに基づいてアバター画像を設定
-    var texture_path = get_avatar_texture_path(npc_data.mesh_id)
+
+    # NPCのメッシュ名に基づいてアバター画像を設定
+    var texture_path = get_avatar_texture_path(npc_data.mesh_name)
     var loaded_texture = load(texture_path)
     
     texture = loaded_texture
     scale = Vector2(0.8, 0.8)
 
-func get_avatar_texture_path(mesh_id: String) -> String:
+func get_avatar_texture_path(mesh_name: String) -> String:
     # 実際のゲームではここでNPCの画像パスを返す
-    match mesh_id:
-        "human_male_01", "human_male_02", "human_male_03", "human_male_04":
+    print("Getting avatar texture for mesh name: ", mesh_name)
+    match mesh_name:
+        "npc_01", "human_male_02", "human_male_03", "human_male_04":
             return "res://data/icons/male_avatar.svg"
-        "human_female_01", "human_female_02", "human_female_03", "human_female_04":
+        "test1", "human_female_02", "human_female_03", "human_female_04":
             return "res://data/icons/female_avatar.svg"
         _:
             return ""

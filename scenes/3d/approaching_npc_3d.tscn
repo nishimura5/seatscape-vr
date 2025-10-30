@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://y5rfjg8m8lug"]
+
+[ext_resource type="Script" uid="uid://cotrjh1aq6og0" path="res://scripts/scenes/seating/3d/approaching_npc_3d.gd" id="1_86ab5"]
+
+[node name="ApproachingNPC3D" type="Node3D"]
+script = ExtResource("1_86ab5")
+
+[node name="NameLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+pixel_size = 0.001
+billboard = 1
+alpha_antialiasing_edge = 0.01
+text = "NPC"
+font_size = 80
+outline_size = 28
+
+[node name="NpcMesh" type="Node3D" parent="."]

@@ -77,12 +77,14 @@ func initialize_room_data(room_id: String):
         DataRepository.register_seat(seat)
 
 func initialize_npc_data():
+    var personal_space_file_name = "personal_space_01.blend"
     for npc_data in npcs_data:
         var npc = NpcRepository.Npc.new(
             npc_data.id,
-            npc_data.mesh_id,
+            npc_data.mesh_name,
             npc_data.animation_id,
-            npc_data.display_name
+            npc_data.display_name,
+            personal_space_file_name
         )
         DataRepository.register_npc(npc)
 
@@ -138,12 +140,12 @@ func initialize_default_assignment(room_id: String):
 func create_missing_npc(npc_id: String) -> NpcRepository.Npc:
     # NPCIDから基本情報を推測して作成
     var display_name = generate_display_name(npc_id)
-    var mesh_id = "human_male_01"
+    var mesh_name = "human_male_01"
     var animation_id = "sitting_idle"  # デフォルトアニメーション
     
     var npc = NpcRepository.Npc.new(
         npc_id,
-        mesh_id,
+        mesh_name,
         animation_id,
         display_name
     )

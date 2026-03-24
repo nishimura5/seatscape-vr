@@ -1,7 +1,7 @@
-[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bxample123456"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bxample123456"]
 
 [ext_resource type="Shader" uid="uid://bctajqqh8klqj" path="res://tres/toon_shader.gdshader" id="1"]
-[ext_resource type="Texture2D" uid="uid://d2jft7gmqrw4e" path="res://data/3d/textures/body.png" id="2_tcd50"]
+[ext_resource type="Texture2D" uid="uid://d2jft7gmqrw4e" path="res://data/3d/textures/wear_tex.png" id="2_tcd50"]
 
 [resource]
 render_priority = 0

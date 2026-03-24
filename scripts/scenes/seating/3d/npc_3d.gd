@@ -18,7 +18,9 @@ extends Node3D
 @onready var personal_collision: CollisionShape3D = $PersonalSpaceContainer/PersonalAreaDetector/PersonalCollision
 @onready var social_collision: CollisionShape3D = $PersonalSpaceContainer/SocialAreaDetector/SocialCollision
 
-@onready var toon_material: ShaderMaterial = load("res://tres/toon_shader_material.tres")
+@onready var toon_wear_material: ShaderMaterial = load("res://tres/toon_wear_shader_material.tres")
+@onready var toon_skin_material: ShaderMaterial = load("res://tres/toon_skin_shader_material.tres")
+@onready var toon_head_material: ShaderMaterial = load("res://tres/toon_head_shader_material.tres")
 @onready var outline_material: ShaderMaterial = load("res://tres/outline_shader_material.tres")
 
 var npc_data: NpcRepository.Npc
@@ -72,14 +74,12 @@ func apply_npc_data(npc: NpcRepository.Npc):
 
 #    var random_seek_time = randf_range(20.0, 120.0)
 
-    npc_mesh.position.y = 0.2
+    npc_mesh.position.y = 0.0
     name_label.position.y -= 0.3
 
     # toon shader setup
     var body_mesh = npc_mesh.get_node("rig/Skeleton3D/Body")
     apply_toon_outline_to_mesh(body_mesh)
-#    var wear_mesh = npc_mesh.get_node("Armature01/Skeleton3D/wear1")
-#    apply_toon_outline_to_mesh(wear_mesh)
 
     # animation setup
     var animator_player = npc_mesh.get_node_or_null("AnimationPlayer")
@@ -93,7 +93,9 @@ func apply_toon_outline_to_mesh(mesh_instance: MeshInstance3D):
     骨格アニメーションでも正しく追従するように修正
     """
 
-    mesh_instance.set_surface_override_material(0, toon_material)
+    mesh_instance.set_surface_override_material(0, toon_wear_material)
+    mesh_instance.set_surface_override_material(1, toon_skin_material)
+    mesh_instance.set_surface_override_material(2, toon_head_material)
 
     var outline_node = mesh_instance.get_node_or_null("Outline")
     if outline_node == null:
@@ -121,10 +123,12 @@ func apply_toon_outline_to_mesh(mesh_instance: MeshInstance3D):
         
         # アウトラインマテリアルを適用
         outline_node.set_surface_override_material(0, outline_material)
+        outline_node.set_surface_override_material(1, outline_material)
+        outline_node.set_surface_override_material(2, outline_material)
         
         # レンダリング順序を調整
         outline_material.render_priority = -1
-        toon_material.render_priority = 0
+        toon_wear_material.render_priority = 0
 
         
 func find_mesh_by_name(target_name: String) -> Mesh:

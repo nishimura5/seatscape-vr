@@ -49,9 +49,9 @@ func get_avatar_texture_path(mesh_name: String) -> String:
     # 実際のゲームではここでNPCの画像パスを返す
     print("Getting avatar texture for mesh name: ", mesh_name)
     match mesh_name:
-        "npc_01", "human_male_02", "human_male_03", "human_male_04":
+        "kacho_160", "human_male_02", "human_male_03", "human_male_04":
             return "res://data/icons/male_avatar.svg"
-        "test1", "human_female_02", "human_female_03", "human_female_04":
+        "kacho_160", "human_female_02", "human_female_03", "human_female_04":
             return "res://data/icons/female_avatar.svg"
         _:
             return ""

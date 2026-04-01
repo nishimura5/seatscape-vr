@@ -24,8 +24,8 @@ extends Node3D
 @onready var outline_material: ShaderMaterial = load("res://tres/outline_shader_material.tres")
 
 const NPC_BLEND_SHAPES := {
-    "SkA": 0.0,
-    "SkB": 1.0,
+    "SkA": 1.0,
+    "SkB": 0.0,
 }
 
 var npc_data: NpcRepository.Npc
@@ -92,6 +92,7 @@ func apply_npc_data(npc: NpcRepository.Npc):
     var animator_player = npc_mesh.get_node_or_null("AnimationPlayer")
     if animator_player:
         animator_player.play("Sitting")
+        animator_player.advance(0.0)
 #        animator_player.seek(random_seek_time, true)
 
 func apply_blend_shapes(target_mesh, blend_shape_val_dict):

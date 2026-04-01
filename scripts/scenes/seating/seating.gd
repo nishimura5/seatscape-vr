@@ -69,6 +69,9 @@ func capture_mouse():
         Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func show_initial_dialog():
+    await get_tree().process_frame
+    await RenderingServer.frame_post_draw
+
     var current_room_id = GameStateManager.get_current_scenario_room_id()
     player.show_dialog(current_room_id)
 

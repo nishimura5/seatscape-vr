@@ -23,6 +23,11 @@ extends Node3D
 @onready var toon_head_material: ShaderMaterial = load("res://tres/toon_head_shader_material.tres")
 @onready var outline_material: ShaderMaterial = load("res://tres/outline_shader_material.tres")
 
+const NPC_BLEND_SHAPES := {
+    "SkA": 0.0,
+    "SkB": 1.0,
+}
+
 var npc_data: NpcRepository.Npc
 var is_personal_space_visible: bool = false
 
@@ -78,14 +83,29 @@ func apply_npc_data(npc: NpcRepository.Npc):
     name_label.position.y -= 0.3
 
     # toon shader setup
-    var body_mesh = npc_mesh.get_node("rig/Skeleton3D/Body")
+    var body_mesh = npc_mesh.get_node("アーマチュア/Skeleton3D/BodyObj")
     apply_toon_outline_to_mesh(body_mesh)
+
+    apply_blend_shapes(npc_mesh, NPC_BLEND_SHAPES)
 
     # animation setup
     var animator_player = npc_mesh.get_node_or_null("AnimationPlayer")
     if animator_player:
         animator_player.play("Sitting")
 #        animator_player.seek(random_seek_time, true)
+
+func apply_blend_shapes(target_mesh, blend_shape_val_dict):
+    if target_mesh == null:
+        return
+
+    if target_mesh is MeshInstance3D:
+        for blend_shape_name in blend_shape_val_dict.keys():
+            var blend_shape_idx = target_mesh.find_blend_shape_by_name(blend_shape_name)
+            if blend_shape_idx != -1:
+                target_mesh.set_blend_shape_value(blend_shape_idx, float(blend_shape_val_dict[blend_shape_name]))
+
+    for child in target_mesh.get_children():
+        apply_blend_shapes(child, blend_shape_val_dict)
 
 func apply_toon_outline_to_mesh(mesh_instance: MeshInstance3D):
     """

@@ -38,8 +38,8 @@ func load_avatar_texture():
         return
     texture_load_attempted = true
 
-    # NPCのメッシュ名に基づいてアバター画像を設定
-    var texture_path = get_avatar_texture_path(npc_data.mesh_name)
+    # NPCのgenderに基づいてアバター画像を設定
+    var texture_path = get_avatar_texture_path(npc_data.gender)
     if texture_path.is_empty():
         return
 
@@ -50,13 +50,13 @@ func load_avatar_texture():
     texture = loaded_texture
     scale = Vector2(0.8, 0.8)
 
-func get_avatar_texture_path(mesh_name: String) -> String:
-    # 実際のゲームではここでNPCの画像パスを返す
-    print("Getting avatar texture for mesh name: ", mesh_name)
-    match mesh_name:
-        "kacho_160", "human_male_02", "human_male_03", "human_male_04", "sitting01":
+func get_avatar_texture_path(gender: String) -> String:
+    # npcs.jsonで管理するgenderに従ってアイコンを決定
+    print("Getting avatar texture for gender: ", gender)
+    match gender.to_lower():
+        "male":
             return "icons/male_avatar.svg"
-        "kacho_160", "human_female_02", "human_female_03", "human_female_04":
+        "female":
             return "icons/female_avatar.svg"
         _:
             return ""

@@ -45,6 +45,13 @@ SeatScape VRはGodot4.5を使用して開発しています。実行する際は
 
 NPCの定義を行うファイルです。
 
+主な項目:
+- `id`: NPCの一意ID
+- `display_name`: 表示名
+- `mesh_name`: 3Dモデル名
+- `animation_id`: アニメーションID
+- `gender`: アバターアイコン判定用の性別（`male` / `female`）
+
 ### rooms.json
 
 部屋の定義を行うファイルです。

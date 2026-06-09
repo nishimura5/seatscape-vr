@@ -79,13 +79,15 @@ func initialize_room_data(room_id: String):
 func initialize_npc_data():
     var personal_space_file_name = "personal_space_01.blend"
     for npc_data in npcs_data:
+        var gender = npc_data.get("gender", "male")
         var npc = NpcRepository.Npc.new(
             npc_data.id,
             npc_data.mesh_name,
             npc_data.animation_id,
             npc_data.display_name,
             "",
-            personal_space_file_name
+            personal_space_file_name,
+            gender
         )
         DataRepository.register_npc(npc)
 

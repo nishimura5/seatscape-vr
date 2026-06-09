@@ -1,8 +1,6 @@
 # scripts/autoload/dialog_manager.gd
 extends Node
 
-const DIALOGS_DATA_PATH = "res://data/configs/dialogs.json"
-
 var dialog_data: Dictionary = {}
 var current_dialog_system: Control = null
 
@@ -10,22 +8,12 @@ func _ready():
     load_dialog_data()
 
 func load_dialog_data():
-    var file = FileAccess.open(DIALOGS_DATA_PATH, FileAccess.READ)
-    if not file:
-        print("ダイアログデータファイルが見つかりません: ", DIALOGS_DATA_PATH)
+    var file_manager = FileManager.new()
+    var data = file_manager.load_dialogs_data()
+    if data.is_empty():
+        print("ダイアログデータの読み込みに失敗しました")
         return
     
-    var json_text = file.get_as_text()
-    file.close()
-    
-    var json = JSON.new()
-    var parse_result = json.parse(json_text)
-    
-    if parse_result != OK:
-        print("ダイアログデータのJSONパースエラー: ", json.get_error_message())
-        return
-    
-    var data = json.data
     if data.has("dialogs"):
         dialog_data = data.dialogs
         print("ダイアログデータを読み込みました: ", dialog_data.keys().size(), "個のダイアログ")

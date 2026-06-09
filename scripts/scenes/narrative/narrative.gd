@@ -129,12 +129,12 @@ func show_initial_dialog():
 func setup_background_image():
     """背景画像を設定"""
     var image_path = narrative_data.get(current_narrative_id, {}).get("image_path", "")
-    
-    if not ResourceLoader.exists(image_path):
-        print("画像ファイルが存在しません: ", image_path)
+
+    var texture = Main.load_data_texture(image_path)
+    if not texture:
+        print("画像ファイルが存在しません: ", Main.get_data_path(image_path))
         return
-    
-    var texture = load(image_path)
+
     background_image.texture = texture
     next_button.visible = false
 

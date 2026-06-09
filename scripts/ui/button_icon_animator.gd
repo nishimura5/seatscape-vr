@@ -18,13 +18,13 @@ func _ready():
 
 func load_textures():
     var texture_paths = [
-        "res://data/icons/button_icon_release.svg",
-        "res://data/icons/button_icon_push.svg"
+        "icons/button_icon_release.svg",
+        "icons/button_icon_push.svg"
     ]
     
     for path in texture_paths:
-        if ResourceLoader.exists(path):
-            var tex = load(path)
+        var tex = Main.load_data_texture(path)
+        if tex:
             button_textures.append(tex)
 
 func _process(delta):

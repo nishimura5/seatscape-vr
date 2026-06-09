@@ -6,6 +6,7 @@ extends Control
 @onready var sub_viewport: SubViewport = $XRUI/UIPanel/SubViewport
 @onready var xr_ui_panel: Node3D = $XRUI/UIPanel
 @onready var panel_mesh: MeshInstance3D = $XRUI/UIPanel/PanelMesh
+@onready var background_texture: TextureRect = $SharedUI/BackgroundTexture
 
 # Buttons
 @onready var scenario_button: Button = $SharedUI/VBoxContainer/HBoxContainer/ScenarioButton
@@ -22,9 +23,15 @@ var ui_panel_material: StandardMaterial3D
 var xr_button_focus: XRButtonFocus
 
 func _ready():
+    setup_background_texture()
     setup_mode()
     setup_connections()
     call_deferred("setup_ui_focus")
+
+func setup_background_texture():
+    var texture = Main.load_data_texture("images/title.png")
+    if texture:
+        background_texture.texture = texture
 
 func setup_mode():
     """XRまたはデスクトップモードの設定"""

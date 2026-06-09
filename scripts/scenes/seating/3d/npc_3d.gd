@@ -32,7 +32,21 @@ var npc_data: NpcRepository.Npc
 var is_personal_space_visible: bool = false
 
 func _ready():
-    pass
+    setup_toon_materials()
+
+func setup_toon_materials():
+    toon_wear_material = toon_wear_material.duplicate() as ShaderMaterial
+    toon_skin_material = toon_skin_material.duplicate() as ShaderMaterial
+    toon_head_material = toon_head_material.duplicate() as ShaderMaterial
+
+    apply_toon_texture(toon_wear_material, "3d/textures/wear_tex.png")
+    apply_toon_texture(toon_skin_material, "3d/textures/skin_tex.png")
+    apply_toon_texture(toon_head_material, "3d/textures/head_tex.png")
+
+func apply_toon_texture(material: ShaderMaterial, texture_path: String):
+    var texture = Main.load_data_texture(texture_path)
+    if texture:
+        material.set_shader_parameter("albedo_texture", texture)
 
 func setup_areas():
     setup_area("PSIntimate", intimate_visual, intimate_collision, intimate_area_detector)
@@ -41,6 +55,9 @@ func setup_areas():
 
 func setup_area(zone_name: String, visual: MeshInstance3D, collision: CollisionShape3D, area_detector: Area3D):
     var mesh = find_mesh_by_name(zone_name)
+    if mesh == null:
+        push_error("personal space meshを読み込めませんでした: " + zone_name)
+        return
     collision.shape = mesh.create_convex_shape()
  
     area_detector.collision_layer = 0x04
@@ -55,15 +72,20 @@ func setup_area(zone_name: String, visual: MeshInstance3D, collision: CollisionS
         social_area_detector.name = "SocialArea_" + npc_data.id
 
 func setup_npc_mesh(npc: NpcRepository.Npc):
-    var blend_path = "res://data/3d/characters/" + npc.blend_file_name
+    var blend_path = "3d/characters/" + npc.blend_file_name
     print(blend_path)
-    var npc_packed_scene = load(blend_path)
+    var npc_packed_scene = Main.load_data_packed_scene(blend_path)
+    if not npc_packed_scene:
+        return
     npc_mesh = npc_packed_scene.instantiate()
     add_child(npc_mesh)
 
-    var ps_blend_path = "res://data/3d/helpers/" + npc.personal_space_file_name
+    var ps_blend_path = Main.get_project_data_path("3d/helpers/" + npc.personal_space_file_name)
     print(ps_blend_path)
-    var ps_packed_scene = load(ps_blend_path)
+    var ps_packed_scene = Main.load_data_packed_scene("3d/helpers/" + npc.personal_space_file_name)
+    if not ps_packed_scene:
+        push_error("personal space helperを読み込めませんでした: " + ps_blend_path)
+        return
     personal_space_mesh = ps_packed_scene.instantiate()
     personal_space_mesh.visible = false
     add_child(personal_space_mesh)
@@ -75,6 +97,9 @@ func set_npc_data(npc: NpcRepository.Npc):
     call_deferred("apply_npc_data", npc)
 
 func apply_npc_data(npc: NpcRepository.Npc):
+    if npc_mesh == null or personal_space_mesh == null:
+        return
+
     name_label.text = npc.display_name
 
 #    var random_seek_time = randf_range(20.0, 120.0)
@@ -156,6 +181,9 @@ func find_mesh_by_name(target_name: String) -> Mesh:
     return search_node_for_mesh(personal_space_mesh, target_name)
 
 func search_node_for_mesh(node: Node, target_name: String) -> Mesh:
+    if node == null:
+        return null
+
     if node.name == target_name and node is MeshInstance3D:
         return node.mesh
     for child in node.get_children():

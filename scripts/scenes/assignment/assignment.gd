@@ -6,6 +6,7 @@ extends Control
 @onready var back_button: Button = $HBoxContainer/MarginContainer/UIControls/BackButton
 @onready var save_button: Button = $HBoxContainer/MarginContainer/UIControls/SaveButton
 @onready var clear_button: Button = $HBoxContainer/MarginContainer/UIControls/ClearButton
+@onready var ui_controls: VBoxContainer = $HBoxContainer/MarginContainer/UIControls
 @onready var drag_preview: Control = $DragPreview
 @onready var drag_npc_sprite: Sprite2D = $DragPreview/DragNpcSprite
 
@@ -34,6 +35,8 @@ func _initialize_managers():
 
 func _setup_ui():
     """UI要素の初期設定"""
+    _setup_external_font()
+
     start_seating_button.text = "Enter"
     back_button.text = "Back"
     save_button.text = "Save"
@@ -41,6 +44,13 @@ func _setup_ui():
     
     start_seating_button.disabled = false
     drag_preview.visible = false
+
+func _setup_external_font():
+    var font_resource = Main.load_data_resource("fonts/NotoSansJP-Regular.ttf")
+    if font_resource is Font and ui_controls.theme:
+        var theme = ui_controls.theme.duplicate() as Theme
+        theme.default_font = font_resource as Font
+        ui_controls.theme = theme
 
 func _setup_connections():
     """シグナル接続の設定"""
@@ -344,10 +354,9 @@ func _handle_seat_click(seat_id: String):
     if seat_manager.select_seat(seat_id):
         assignment_world.clear_all_move_modes()
         assignment_world.set_seat_move_mode(seat_id, true)
-        # load image from res/data/3d_previews/<seat_id>.png
+        # load image from external data/3d_previews/<seat_id>.png
         var preview_name = assignment_world.get_preview_image_name(seat_id)
-        var preview_path = "res://data/3d_previews/%s.png" % preview_name
-        assignment_world.preview_image.texture = load(preview_path)
+        assignment_world.preview_image.texture = Main.load_data_texture("3d_previews/%s.png" % preview_name)
         assignment_world.preview_image.visible = true
 
 func _handle_spawn_click():

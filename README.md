@@ -35,7 +35,7 @@ SeatScape VRはGodot4.5を使用して開発しています。実行する際は
 
 ## 設定ファイル
 
-部屋や座席の作成はdata/configsフォルダ内のjsonファイルに記述します。
+部屋や座席の作成は外部dataフォルダの`configs`内のjsonファイルに記述します。外部dataフォルダのフルパスは`scripts/main.gd`の`DATA_FOLDER_FULL_PATH`で指定します。
 
 ### meshes.json
 
@@ -51,9 +51,11 @@ NPCの定義を行うファイルです。
 
 ## アセット配置
 
-3Dモデルは用途ごとに`data/3d`以下のフォルダへ配置します。
+リポジトリ外のdataフォルダは、従来の`data`フォルダと同じ相対構造で配置します。家具/NPCモデル、config json、UI画像、フォント、3Dプレビュー画像などはこの外部dataフォルダから読み込まれます。
 
-- `data/3d/characters`: プレイヤーやNPCなどの人物モデル
-- `data/3d/furniture`: 座席、テーブル、説明パネルなどの家具・配置物モデル
-- `data/3d/helpers`: 個人空間表示や経路マーカーなどの補助モデル
-- `data/3d/textures`: 3Dモデル用テクスチャ
+- `<external-data>/3d/characters`: NPCなどの人物モデル
+- `<external-data>/3d/furniture`: 座席、テーブル、説明パネルなどの家具・配置物モデル
+- `<external-data>/3d/textures`: 3Dモデル用テクスチャ
+- `<external-data>/3d_previews`: 座席・家具のプレビュー画像
+
+リポジトリ内の`data`には、実行時にプロジェクト内リソースとして扱う`data/3d/helpers`、`data/3d/textures/carpet_pattern_*`、`data/3d/characters/player.blend`、`data/icons/can_sit_icon.svg`のみを残します。

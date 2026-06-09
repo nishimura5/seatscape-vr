@@ -31,6 +31,9 @@ func _ready():
     EventBus.scene_changed.connect(_on_scene_changed)
 
     # narrative_data.jsonの読み込み
+    reload_narrative_data()
+
+func reload_narrative_data():
     var file_manager = FileManager.new()
     narrative_data = file_manager.load_narrative_data()
 
@@ -145,22 +148,12 @@ func load_scenario_room_list():
     """room_scenario.jsonからroom_idsリストを読み込み"""
     scenario_room_ids.clear()
     
-    var file = FileAccess.open("res://data/configs/selection.json", FileAccess.READ)
-    if not file:
+    var file_manager = FileManager.new()
+    var data = file_manager.load_selection_data()
+    if data.is_empty():
         print("selection.jsonが見つかりません")
         return
-    
-    var json_text = file.get_as_text()
-    file.close()
-    
-    var json = JSON.new()
-    var parse_result = json.parse(json_text)
-    
-    if parse_result != OK:
-        print("room_scenario.jsonのパースエラー: ", json.get_error_message())
-        return
-    
-    var data = json.data
+
     if data.has("for_scenario") and data.for_scenario is Array:
         for room_id in data.for_scenario:
             scenario_room_ids.append(room_id)

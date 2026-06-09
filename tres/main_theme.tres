@@ -1,7 +1,5 @@
 [gd_resource type="Theme" format=3 uid="uid://cymem6u3gnfol"]
 
-[ext_resource type="FontFile" uid="uid://cmxrl5v7gj12h" path="res://data/fonts/NotoSansJP-Regular.ttf" id="1_rjgu6"]
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_disabled"]
 content_margin_left = 20.0
 content_margin_top = 8.0
@@ -74,7 +72,6 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
 [resource]
-default_font = ExtResource("1_rjgu6")
 default_font_size = 36
 Button/styles/disabled = SubResource("StyleBoxFlat_disabled")
 Button/styles/focus = SubResource("StyleBoxFlat_focus")

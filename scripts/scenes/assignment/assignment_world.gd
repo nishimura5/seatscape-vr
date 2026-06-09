@@ -32,14 +32,14 @@ var preview_image_file_names: Array
 var preview_dict: Dictionary = {}
 
 func _ready():
-    var file = FileAccess.open("res://data/configs/meshes.json", FileAccess.READ)
-    if file:
-        var json = JSON.new()
-        var result = json.parse(file.get_as_text())
-        if result == OK:
-            for key in json.get_data().keys():
-                preview_image_file_names.append(key)
-        file.close()
+    var preview_frame_texture = Main.load_data_texture("images/preview_frame.svg")
+    if preview_frame_texture:
+        preview_frame.texture = preview_frame_texture
+
+    var file_manager = FileManager.new()
+    var meshes = file_manager.load_meshes_data()
+    for key in meshes.keys():
+        preview_image_file_names.append(key)
     print("Loaded preview image file names: ", preview_image_file_names)
 
     grid_manager = GridManager.new()

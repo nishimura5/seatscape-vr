@@ -1,7 +1,5 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://bi7gadnjjtp2h"]
 
-[ext_resource type="Texture2D" uid="uid://b4sbtw6sunabh" path="res://data/3d/textures/skin_tex.png" id="1_gevx8"]
-
 [sub_resource type="Shader" id="Shader_gevx8"]
 code = "shader_type spatial;
 render_mode unshaded, depth_draw_always;
@@ -27,7 +25,6 @@ void fragment() {
 [resource]
 render_priority = 0
 shader = SubResource("Shader_gevx8")
-shader_parameter/albedo_texture = ExtResource("1_gevx8")
 shader_parameter/light_direction = Vector3(0, -1, -1)
 shader_parameter/shade_threshold = 0.3
 shader_parameter/dark_shade = 0.8

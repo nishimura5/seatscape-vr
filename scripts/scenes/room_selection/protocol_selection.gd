@@ -150,22 +150,12 @@ func create_protocol_buttons():
         create_protocol_button(protocol_id)
 
 func load_protocol_menu() -> Dictionary:
-    var file = FileAccess.open("res://data/configs/selection.json", FileAccess.READ)
-    if not file:
+    var file_manager = FileManager.new()
+    var data = file_manager.load_selection_data()
+    if data.is_empty():
         print("selection.json not found.")
         return {}
 
-    var json_text = file.get_as_text()
-    file.close()
-
-    var json = JSON.new()
-    var parse_result = json.parse(json_text)
-
-    if parse_result != OK:
-        print("selection.jsonのパースエラー: ", json.get_error_message())
-        return {}
-
-    var data = json.data
     if data.has("for_experiment") and data.for_experiment is Dictionary:
         var result: Dictionary = {}
         for protocol_id in data.for_experiment.keys():

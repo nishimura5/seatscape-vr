@@ -19,16 +19,16 @@ func _ready():
 
 func load_textures():
     var texture_paths = [
-        "res://data/images/dialog/guide_0.png",
-        "res://data/images/dialog/guide_1.png",
-        "res://data/images/dialog/guide_2.png", 
-        "res://data/images/dialog/guide_3.png",
-        "res://data/images/dialog/guide_4.png",
+        "images/dialog/guide_0.png",
+        "images/dialog/guide_1.png",
+        "images/dialog/guide_2.png",
+        "images/dialog/guide_3.png",
+        "images/dialog/guide_4.png",
     ]
     
     for path in texture_paths:
-        if ResourceLoader.exists(path):
-            var tex = load(path)
+        var tex = Main.load_data_texture(path)
+        if tex:
             guide_textures.append(tex)
 
 func _process(delta):

@@ -2,10 +2,12 @@
 class_name FileManager
 extends RefCounted
 
-const ROOMS_DATA_PATH = "res://data/configs/rooms.json"
-const MESHES_DATA_PATH = "res://data/configs/meshes.json"
-const NPCS_DATA_PATH = "res://data/configs/npcs.json"
-const NARRATIVE_DATA_PATH = "res://data/configs/narrative_data.json"
+const ROOMS_DATA_PATH = "configs/rooms.json"
+const MESHES_DATA_PATH = "configs/meshes.json"
+const NPCS_DATA_PATH = "configs/npcs.json"
+const NARRATIVE_DATA_PATH = "configs/narrative_data.json"
+const DIALOGS_DATA_PATH = "configs/dialogs.json"
+const SELECTION_DATA_PATH = "configs/selection.json"
 
 func save_rooms_data() -> bool:
     # 既存のrooms.jsonを読み込み
@@ -28,9 +30,10 @@ func save_rooms_data() -> bool:
     var json_string = JSON.stringify(existing_data, "\t")
     json_string = format_position_arrays(json_string)
     
-    var file = FileAccess.open(ROOMS_DATA_PATH, FileAccess.WRITE)
+    var rooms_path = Main.get_data_path(ROOMS_DATA_PATH)
+    var file = FileAccess.open(rooms_path, FileAccess.WRITE)
     if not file:
-        print("ファイルを開けませんでした: ", ROOMS_DATA_PATH)
+        print("ファイルを開けませんでした: ", rooms_path)
         return false
     
     file.store_string(json_string)
@@ -61,10 +64,17 @@ func load_npcs_data() -> Dictionary:
 func load_narrative_data() -> Dictionary:
     return load_json(NARRATIVE_DATA_PATH)
 
+func load_dialogs_data() -> Dictionary:
+    return load_json(DIALOGS_DATA_PATH)
+
+func load_selection_data() -> Dictionary:
+    return load_json(SELECTION_DATA_PATH)
+
 func load_json(file_path: String) -> Dictionary:
-    var file = FileAccess.open(file_path, FileAccess.READ)
+    var data_path = Main.get_data_path(file_path)
+    var file = FileAccess.open(data_path, FileAccess.READ)
     if not file:
-        print("ファイルを開けませんでした: ", file_path)
+        print("ファイルを開けませんでした: ", data_path)
         return {}
     
     var json_text = file.get_as_text()

@@ -56,22 +56,12 @@ func create_room_buttons():
 
 func load_room_menu() -> Array[String]:
     """room_scenario.jsonから部屋IDの順番を読み込み"""
-    var file = FileAccess.open("res://data/configs/selection.json", FileAccess.READ)
-    if not file:
+    var file_manager = FileManager.new()
+    var data = file_manager.load_selection_data()
+    if data.is_empty():
         print("selection.json not found.")
         return []
-    
-    var json_text = file.get_as_text()
-    file.close()
-    
-    var json = JSON.new()
-    var parse_result = json.parse(json_text)
-    
-    if parse_result != OK:
-        print("room_scenario.jsonのパースエラー: ", json.get_error_message())
-        return []
-    
-    var data = json.data
+
     if data.has("for_edit") and data.for_edit is Array:
         var result: Array[String] = []
         for room_id in data.for_edit:

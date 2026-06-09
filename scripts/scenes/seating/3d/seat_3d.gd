@@ -20,13 +20,18 @@ func setup_materials():
 
 func setup_area():
     # 座席メッシュをロードしてインスタンス化
-    var seat_scene = Main.load_data_packed_scene("3d/furniture/" + seat_data.mesh_id + ".blend")
+    var seat_scene = Main.load_data_packed_scene("3d/furniture/" + seat_data.mesh_id + ".glb")
     if not seat_scene:
+        print("座席メッシュを読み込めませんでした: " + "3d/furniture/" + seat_data.mesh_id + ".glb")
         return
     seat_mesh = seat_scene.instantiate()
     
     # Available Areaのコリジョン設定
     var available_area_mesh = find_mesh_by_name("available_area")
+    if not available_area_mesh:
+        print("available_areaメッシュが見つかりません: " + seat_data.id)
+        push_error("available_areaメッシュが見つかりません: " + seat_data.id)
+        return
     available_area_collision.shape = available_area_mesh.create_convex_shape()
     
     # コリジョンレイヤー設定
@@ -41,7 +46,15 @@ func setup_area():
     add_child(seat_mesh)
 
 func setup_seat_rendering():
-    var seat_mesh_instance = find_mesh_instance_by_name("seat")
+    var seat_mesh_instance := find_mesh_instance_by_name("seat")
+    if not seat_mesh_instance:
+        seat_mesh_instance = find_first_mesh_instance(seat_mesh)
+        if seat_mesh_instance:
+            push_warning("seatメッシュ名が見つからないため先頭MeshInstance3Dを使用: " + seat_mesh_instance.name)
+    if not seat_mesh_instance:
+        print("seatメッシュが見つかりません: " + seat_data.id)
+        push_error("seatメッシュが見つかりません: " + seat_data.id)
+        return
     seat_mesh_instance.gi_mode = GeometryInstance3D.GI_MODE_STATIC
     seat_mesh_instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
     
@@ -50,12 +63,25 @@ func set_seat_data(seat: SeatRepository.Seat):
     call_deferred("setup_area")
 
 func find_mesh_by_name(mesh_name: String) -> Mesh:
-    var mesh_instance = search_node(seat_mesh, mesh_name)
+    var mesh_instance := search_node(seat_mesh, mesh_name)
+    if not mesh_instance:
+        return null
     return mesh_instance.mesh
 
 func find_mesh_instance_by_name(mesh_name: String) -> MeshInstance3D:
     var mesh_instance = search_node(seat_mesh, mesh_name)
     return mesh_instance
+
+func find_first_mesh_instance(node: Node) -> MeshInstance3D:
+    if node == null:
+        return null
+    if node is MeshInstance3D:
+        return node as MeshInstance3D
+    for child in node.get_children():
+        var found := find_first_mesh_instance(child)
+        if found:
+            return found
+    return null
 
 func search_node(node: Node, target_name: String) -> MeshInstance3D:
     if node.name == target_name and node is MeshInstance3D:
@@ -67,9 +93,11 @@ func search_node(node: Node, target_name: String) -> MeshInstance3D:
     return null
 
 func set_occupied_state(occupied: bool):
-    var target_mesh = find_mesh_instance_by_name("seat")
+    var target_mesh := find_mesh_instance_by_name("seat")
+    if not target_mesh:
+        target_mesh = find_first_mesh_instance(seat_mesh)
 
-    if occupied:
+    if occupied and target_mesh:
         target_mesh.material_override = occupied_material
 
     # AvailableAreaの有効/無効切り替え

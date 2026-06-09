@@ -71,30 +71,36 @@ func setup_area(zone_name: String, visual: MeshInstance3D, collision: CollisionS
         personal_area_detector.name = "PersonalArea_" + npc_data.id
         social_area_detector.name = "SocialArea_" + npc_data.id
 
-func setup_npc_mesh(npc: NpcRepository.Npc):
-    var blend_path = "3d/characters/" + npc.blend_file_name
-    print(blend_path)
-    var npc_packed_scene = Main.load_data_packed_scene(blend_path)
+func setup_npc_mesh(npc: NpcRepository.Npc) -> bool:
+    var mesh_path = "3d/characters/" + npc.mesh_file_name
+    var npc_packed_scene = Main.load_data_packed_scene(mesh_path)
     if not npc_packed_scene:
-        return
+        push_error("NPCメッシュを読み込めませんでした: " + mesh_path)
+        return false
     npc_mesh = npc_packed_scene.instantiate()
     add_child(npc_mesh)
 
-    var ps_blend_path = Main.get_project_data_path("3d/helpers/" + npc.personal_space_file_name)
-    print(ps_blend_path)
-    var ps_packed_scene = Main.load_data_packed_scene("3d/helpers/" + npc.personal_space_file_name)
+    var personal_space_path = "3d/helpers/" + npc.personal_space_file_name
+    var ps_packed_scene = Main.load_data_packed_scene(personal_space_path)
     if not ps_packed_scene:
-        push_error("personal space helperを読み込めませんでした: " + ps_blend_path)
-        return
+        push_error("personal space helperを読み込めませんでした: " + Main.get_data_path(personal_space_path))
+        return false
     personal_space_mesh = ps_packed_scene.instantiate()
     personal_space_mesh.visible = false
     add_child(personal_space_mesh)
+    return true
 
 func set_npc_data(npc: NpcRepository.Npc):
     npc_data = npc
-    call_deferred("setup_npc_mesh", npc)
-    call_deferred("setup_areas")
-    call_deferred("apply_npc_data", npc)
+    call_deferred("initialize_npc", npc)
+
+func initialize_npc(npc: NpcRepository.Npc):
+    var setup_ok := setup_npc_mesh(npc)
+    if not setup_ok:
+        push_error("NPC初期化を中断しました: " + npc.id)
+        return
+    setup_areas()
+    apply_npc_data(npc)
 
 func apply_npc_data(npc: NpcRepository.Npc):
     if npc_mesh == null or personal_space_mesh == null:
@@ -108,8 +114,11 @@ func apply_npc_data(npc: NpcRepository.Npc):
     name_label.position.y -= 0.3
 
     # toon shader setup
-    var body_mesh = npc_mesh.get_node("アーマチュア/Skeleton3D/BodyObj")
-    apply_toon_outline_to_mesh(body_mesh)
+    var body_mesh := find_mesh_instance_by_name(npc_mesh, "BodyObj")
+    if body_mesh:
+        apply_toon_outline_to_mesh(body_mesh)
+    else:
+        push_warning("BodyObjが見つからないためtoon/outline適用をスキップ: " + npc_mesh.name)
 
     apply_blend_shapes(npc_mesh, NPC_BLEND_SHAPES)
 
@@ -138,6 +147,9 @@ func apply_toon_outline_to_mesh(mesh_instance: MeshInstance3D):
     Skeleton3Dの子MeshInstance3Dに対してtoon+outlineエフェクトを適用
     骨格アニメーションでも正しく追従するように修正
     """
+
+    if mesh_instance == null:
+        return
 
     mesh_instance.set_surface_override_material(0, toon_wear_material)
     mesh_instance.set_surface_override_material(1, toon_skin_material)
@@ -190,6 +202,20 @@ func search_node_for_mesh(node: Node, target_name: String) -> Mesh:
         var result = search_node_for_mesh(child, target_name)
         if result:
             return result
+    return null
+
+func find_mesh_instance_by_name(node: Node, target_name: String) -> MeshInstance3D:
+    if node == null:
+        return null
+
+    if node.name == target_name and node is MeshInstance3D:
+        return node
+
+    for child in node.get_children():
+        var result := find_mesh_instance_by_name(child, target_name)
+        if result:
+            return result
+
     return null
 
 func set_personal_space_visibility(target_visible: bool):

@@ -84,6 +84,7 @@ func initialize_npc_data():
             npc_data.mesh_name,
             npc_data.animation_id,
             npc_data.display_name,
+            "",
             personal_space_file_name
         )
         DataRepository.register_npc(npc)

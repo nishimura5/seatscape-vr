@@ -46,11 +46,60 @@ static func load_data_resource(relative_path: String) -> Resource:
 	push_error("外部dataリソースを読み込めませんでした: " + path)
 	return null
 
+static func load_external_glb_packed_scene(glb_path: String) -> PackedScene:
+	var resource := ResourceLoader.load(glb_path)
+	if resource is PackedScene:
+		return resource
+
+	var gltf_document := GLTFDocument.new()
+	var gltf_state := GLTFState.new()
+	var append_err := gltf_document.append_from_file(glb_path, gltf_state)
+	if append_err != OK:
+		print("GLTFDocumentの読み込みに失敗: %s (err=%d)" % [glb_path, append_err])
+		push_error("GLTFDocumentの読み込みに失敗: %s (err=%d)" % [glb_path, append_err])
+		return null
+
+	var generated_root := gltf_document.generate_scene(gltf_state)
+	if generated_root == null:
+		print("GLTFDocument.generate_sceneに失敗: " + glb_path)
+		push_error("GLTFDocument.generate_sceneに失敗: " + glb_path)
+		return null
+
+	var packed := PackedScene.new()
+	var pack_err := packed.pack(generated_root)
+	generated_root.free()
+	if pack_err != OK:
+		print("PackedScene.packに失敗: %s (err=%d)" % [glb_path, pack_err])
+		push_error("PackedScene.packに失敗: %s (err=%d)" % [glb_path, pack_err])
+		return null
+
+	return packed
+
 static func load_data_packed_scene(relative_path: String) -> PackedScene:
+	var clean_path := clean_data_relative_path(relative_path)
+	# .glb は存在確認してから load_data_resource で読む
+	if clean_path.to_lower().ends_with(".glb"):
+		var glb_path := get_data_path(clean_path)
+		if not FileAccess.file_exists(glb_path):
+			print(".glbファイルが見つかりませんでした: " + glb_path)
+			push_error(".glbファイルが見つかりませんでした: " + glb_path)
+			return null
+
+		var glb_scene := load_external_glb_packed_scene(glb_path)
+		if glb_scene:
+			print("PackedSceneを正常に読み込みました: " + glb_path)
+			return glb_scene
+
+		print(".glbのPackedScene化に失敗しました: " + glb_path)
+		push_error(".glbのPackedScene化に失敗しました: " + glb_path)
+		return null
+
 	var resource := load_data_resource(relative_path)
 	if not resource:
+		print("PackedSceneを読み込めませんでした: " + get_data_path(relative_path))
 		return null
 	if resource is PackedScene:
+		print("PackedSceneを正常に読み込みました: " + get_data_path(relative_path))
 		return resource
 	push_error("PackedSceneではありません: " + get_data_path(relative_path))
 	return null

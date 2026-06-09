@@ -14,7 +14,11 @@ func draw_path(movement_log: Array[Dictionary]):
     if movement_log.size() == 0:
         return
     
-    var maker_mesh = load("res://data/3d/helpers/path_marker.blend").instantiate()
+    var marker_scene := Main.load_data_packed_scene("3d/helpers/path_marker.glb")
+    if not marker_scene:
+        push_error("path markerを読み込めませんでした: " + Main.get_data_path("3d/helpers/path_marker.glb"))
+        return
+    var maker_mesh = marker_scene.instantiate()
 
     # 各サンプル点にスフィアを配置
     for i in range(movement_log.size()):

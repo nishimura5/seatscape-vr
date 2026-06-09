@@ -7,7 +7,7 @@ class Npc:
     var mesh_name: String
     var animation_id: String
     var display_name: String
-    var blend_file_name: String
+    var mesh_file_name: String
     var personal_space_file_name: String
 
     func _init(p_id: String = "", p_mesh_name: String = "", p_animation_id: String = "", p_display_name: String = "", p_mesh_file_name: String = "", p_personal_space_file_name: String = "personal_space_01.blend"):
@@ -16,7 +16,7 @@ class Npc:
         animation_id = p_animation_id
         display_name = p_display_name
         rotation_degrees = 0.0
-        blend_file_name = mesh_name + ".blend"
+        mesh_file_name = p_mesh_file_name if not p_mesh_file_name.is_empty() else mesh_name + ".glb"
         personal_space_file_name = p_personal_space_file_name
 
 

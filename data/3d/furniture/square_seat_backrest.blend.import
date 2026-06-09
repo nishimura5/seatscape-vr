@@ -3,21 +3,23 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bcbhjn0k43o0w"
-path="res://.godot/imported/square_seat.blend-f5a4afc34a9c3e7200f68fe21b9ddbdb.scn"
+uid="uid://d0xjvk06nsapf"
+path="res://.godot/imported/square_seat_backrest.blend-e837f5dbbfb18ccaf67ec21439ac3fb2.scn"
 
 [deps]
 
-source_file="res://data/3d/square_seat.blend"
-dest_files=["res://.godot/imported/square_seat.blend-f5a4afc34a9c3e7200f68fe21b9ddbdb.scn"]
+source_file="res://data/3d/furniture/square_seat_backrest.blend"
+dest_files=["res://.godot/imported/square_seat_backrest.blend-e837f5dbbfb18ccaf67ec21439ac3fb2.scn"]
 
 [params]
 
 nodes/root_type=""
 nodes/root_name=""
+nodes/root_script=null
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
 nodes/use_node_type_suffixes=true
 meshes/ensure_tangents=true
 meshes/generate_lods=true
@@ -32,6 +34,9 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
 _subresources={}
 blender/nodes/visible=0
 blender/nodes/active_collection_only=false
@@ -43,6 +48,7 @@ blender/meshes/colors=false
 blender/meshes/uvs=true
 blender/meshes/normals=true
 blender/meshes/export_geometry_nodes_instances=false
+blender/meshes/gpu_instances=false
 blender/meshes/tangents=true
 blender/meshes/skins=2
 blender/meshes/export_bones_deforming_mesh_only=false
@@ -51,3 +57,4 @@ blender/materials/export_materials=1
 blender/animation/limit_playback=true
 blender/animation/always_sample=true
 blender/animation/group_tracks=true
+gltf/naming_version=2

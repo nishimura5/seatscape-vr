@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://dmkqbpusuclij"]
 
 [ext_resource type="Script" uid="uid://ch25m7jaytri0" path="res://scripts/scenes/seating/3d/desktop_player_3d.gd" id="1_wbuwe"]
-[ext_resource type="PackedScene" uid="uid://bvpnxbqyuutkv" path="res://data/3d/player.blend" id="2_krfnl"]
+[ext_resource type="PackedScene" uid="uid://bvpnxbqyuutkv" path="res://data/3d/characters/player.blend" id="2_krfnl"]
 [ext_resource type="Script" uid="uid://cximc26fn7ju2" path="res://scripts/scenes/seating/back_area_detector.gd" id="3_m3a67"]
 [ext_resource type="Script" uid="uid://c2vtdebm0rkva" path="res://scripts/scenes/seating/personal_space_detector.gd" id="4_vkir4"]
 [ext_resource type="Texture2D" uid="uid://c1o8xka0o302d" path="res://data/icons/can_sit_icon.svg" id="5_krfnl"]

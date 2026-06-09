@@ -20,7 +20,7 @@ func setup_materials():
 
 func setup_area():
     # 座席メッシュをロードしてインスタンス化
-    seat_mesh = load("res://data/3d/" + seat_data.mesh_id + ".blend").instantiate()
+    seat_mesh = load("res://data/3d/furniture/" + seat_data.mesh_id + ".blend").instantiate()
     
     # Available Areaのコリジョン設定
     var available_area_mesh = find_mesh_by_name("available_area")

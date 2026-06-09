@@ -55,13 +55,13 @@ func setup_area(zone_name: String, visual: MeshInstance3D, collision: CollisionS
         social_area_detector.name = "SocialArea_" + npc_data.id
 
 func setup_npc_mesh(npc: NpcRepository.Npc):
-    var blend_path = "res://data/3d/" + npc.blend_file_name
+    var blend_path = "res://data/3d/characters/" + npc.blend_file_name
     print(blend_path)
     var npc_packed_scene = load(blend_path)
     npc_mesh = npc_packed_scene.instantiate()
     add_child(npc_mesh)
 
-    var ps_blend_path = "res://data/3d/" + npc.personal_space_file_name
+    var ps_blend_path = "res://data/3d/helpers/" + npc.personal_space_file_name
     print(ps_blend_path)
     var ps_packed_scene = load(ps_blend_path)
     personal_space_mesh = ps_packed_scene.instantiate()

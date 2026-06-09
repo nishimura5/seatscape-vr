@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dv4sla58exmiq"
-path="res://.godot/imported/low_table.blend-a837e611d79284943ec378ff9fc0c27a.scn"
+uid="uid://ckh0hwagy3gnn"
+path="res://.godot/imported/low_table_single.blend-91bc903eb707775bfc951c978351e92e.scn"
 
 [deps]
 
-source_file="res://data/3d/low_table.blend"
-dest_files=["res://.godot/imported/low_table.blend-a837e611d79284943ec378ff9fc0c27a.scn"]
+source_file="res://data/3d/furniture/low_table_single.blend"
+dest_files=["res://.godot/imported/low_table_single.blend-91bc903eb707775bfc951c978351e92e.scn"]
 
 [params]
 
@@ -40,8 +40,8 @@ materials/extract_path=""
 _subresources={}
 blender/nodes/visible=0
 blender/nodes/active_collection_only=false
-blender/nodes/punctual_lights=true
-blender/nodes/cameras=true
+blender/nodes/punctual_lights=false
+blender/nodes/cameras=false
 blender/nodes/custom_properties=true
 blender/nodes/modifiers=1
 blender/meshes/colors=false

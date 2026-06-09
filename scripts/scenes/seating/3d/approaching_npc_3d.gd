@@ -9,7 +9,7 @@ extends Node3D
 var npc_data: NpcRepository.Npc
 
 func setup_npc_mesh(npc: NpcRepository.Npc):
-    var blend_path = "res://data/3d/" + npc.blend_file_name
+    var blend_path = "res://data/3d/characters/" + npc.blend_file_name
     print(blend_path)
     var npc_packed_scene = load(blend_path)
     npc_mesh = npc_packed_scene.instantiate()

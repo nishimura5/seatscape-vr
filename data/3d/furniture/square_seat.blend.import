@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://d0xjvk06nsapf"
-path="res://.godot/imported/square_seat_backrest.blend-5af01d541d91b58eaf5a1b5687a18745.scn"
+uid="uid://bcbhjn0k43o0w"
+path="res://.godot/imported/square_seat.blend-d659699b42c4233caecbcb160cfe13ad.scn"
 
 [deps]
 
-source_file="res://data/3d/square_seat_backrest.blend"
-dest_files=["res://.godot/imported/square_seat_backrest.blend-5af01d541d91b58eaf5a1b5687a18745.scn"]
+source_file="res://data/3d/furniture/square_seat.blend"
+dest_files=["res://.godot/imported/square_seat.blend-d659699b42c4233caecbcb160cfe13ad.scn"]
 
 [params]
 

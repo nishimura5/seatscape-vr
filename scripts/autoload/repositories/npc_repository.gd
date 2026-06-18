@@ -11,7 +11,7 @@ class Npc:
     var mesh_file_name: String
     var personal_space_file_name: String
 
-    func _init(p_id: String = "", p_mesh_name: String = "", p_animation_id: String = "", p_display_name: String = "", p_mesh_file_name: String = "", p_personal_space_file_name: String = "personal_space_01.blend", p_gender: String = "male"):
+    func _init(p_id: String = "", p_mesh_name: String = "", p_animation_id: String = "", p_display_name: String = "", p_mesh_file_name: String = "", p_personal_space_file_name: String = "personal_space_01.glb", p_gender: String = "male"):
         id = p_id
         mesh_name = p_mesh_name
         gender = p_gender

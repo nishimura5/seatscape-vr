@@ -27,9 +27,14 @@ const NPC_BLEND_SHAPES := {
     "SkA": 1.0,
     "SkB": 0.0,
 }
+const PERSONAL_SPACE_TEXTURE_PATHS := [
+    "3d/helpers/personal_space_line_color.png",
+    "3d/textures/personal_space_line_color.png",
+]
 
 var npc_data: NpcRepository.Npc
 var is_personal_space_visible: bool = false
+var personal_space_texture: Texture2D
 
 func _ready():
     setup_toon_materials()
@@ -54,22 +59,72 @@ func setup_areas():
     setup_area("PSSocial", social_visual, social_collision, social_area_detector)
 
 func setup_area(zone_name: String, visual: MeshInstance3D, collision: CollisionShape3D, area_detector: Area3D):
-    var mesh = find_mesh_by_name(zone_name)
-    if mesh == null:
+    var source_mesh_instance := find_mesh_instance_by_name(personal_space_mesh, zone_name)
+    if source_mesh_instance == null or source_mesh_instance.mesh == null:
         push_error("personal space meshを読み込めませんでした: " + zone_name)
         return
+    var mesh := source_mesh_instance.mesh
     collision.shape = mesh.create_convex_shape()
  
     area_detector.collision_layer = 0x04
     area_detector.collision_mask = 0x01
 
     visual.mesh = mesh
+    apply_personal_space_materials(source_mesh_instance, visual)
     visual.visible = false
 
     if npc_data:
         intimate_area_detector.name = "IntimateArea_" + npc_data.id
         personal_area_detector.name = "PersonalArea_" + npc_data.id
         social_area_detector.name = "SocialArea_" + npc_data.id
+
+func apply_personal_space_materials(source_mesh_instance: MeshInstance3D, visual: MeshInstance3D):
+    if source_mesh_instance == null or source_mesh_instance.mesh == null:
+        return
+
+    for surface_index in range(source_mesh_instance.mesh.get_surface_count()):
+        var material := source_mesh_instance.get_active_material(surface_index)
+        var prepared_material: Material
+        if material == null:
+            prepared_material = create_personal_space_material()
+        else:
+            prepared_material = prepare_personal_space_material(material)
+        visual.set_surface_override_material(surface_index, prepared_material)
+
+func prepare_personal_space_material(material: Material) -> Material:
+    if not (material is BaseMaterial3D):
+        return material
+
+    var prepared := material.duplicate() as BaseMaterial3D
+    if prepared.albedo_texture == null:
+        var fallback_texture := get_personal_space_texture()
+        if fallback_texture:
+            prepared.albedo_texture = fallback_texture
+    prepared.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+    prepared.cull_mode = BaseMaterial3D.CULL_DISABLED
+    return prepared
+
+func create_personal_space_material() -> StandardMaterial3D:
+    var material := StandardMaterial3D.new()
+    var texture := get_personal_space_texture()
+    if texture:
+        material.albedo_texture = texture
+    material.albedo_color = Color(1.0, 1.0, 1.0, 0.2)
+    material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+    material.cull_mode = BaseMaterial3D.CULL_DISABLED
+    return material
+
+func get_personal_space_texture() -> Texture2D:
+    if personal_space_texture:
+        return personal_space_texture
+
+    for texture_path in PERSONAL_SPACE_TEXTURE_PATHS:
+        if not FileAccess.file_exists(Main.get_data_path(texture_path)):
+            continue
+        personal_space_texture = Main.load_data_texture(texture_path)
+        if personal_space_texture:
+            return personal_space_texture
+    return null
 
 func setup_npc_mesh(npc: NpcRepository.Npc) -> bool:
     var mesh_path = "3d/characters/" + npc.mesh_file_name

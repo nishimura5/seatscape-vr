@@ -2,6 +2,7 @@
 extends Node3D
 
 const PATH_HEIGHT: float = 0.2
+const PATH_MARKER_SCENE_PATH := "res://data/3d/helpers/path_marker.glb"
 
 var path_spheres: Array[MeshInstance3D] = []
 
@@ -14,9 +15,9 @@ func draw_path(movement_log: Array[Dictionary]):
     if movement_log.size() == 0:
         return
     
-    var marker_scene := Main.load_data_packed_scene("3d/helpers/path_marker.glb")
+    var marker_scene := ResourceLoader.load(PATH_MARKER_SCENE_PATH) as PackedScene
     if not marker_scene:
-        push_error("path markerを読み込めませんでした: " + Main.get_data_path("3d/helpers/path_marker.glb"))
+        push_error("path markerを読み込めませんでした: " + PATH_MARKER_SCENE_PATH)
         return
     var maker_mesh = marker_scene.instantiate()
 

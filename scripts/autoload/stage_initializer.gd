@@ -77,7 +77,7 @@ func initialize_room_data(room_id: String):
         DataRepository.register_seat(seat)
 
 func initialize_npc_data():
-    var personal_space_file_name = "personal_space_01.blend"
+    var personal_space_file_name = "personal_space_01.glb"
     for npc_data in npcs_data:
         var gender = npc_data.get("gender", "male")
         var npc = NpcRepository.Npc.new(

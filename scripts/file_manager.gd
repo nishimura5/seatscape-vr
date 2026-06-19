@@ -8,6 +8,7 @@ const NPCS_DATA_PATH = "configs/npcs.json"
 const NARRATIVE_DATA_PATH = "configs/narrative_data.json"
 const DIALOGS_DATA_PATH = "configs/dialogs.json"
 const SELECTION_DATA_PATH = "configs/selection.json"
+const RESULT_CSV_PATH = "output/result.csv"
 
 func save_rooms_data() -> bool:
     # 既存のrooms.jsonを読み込み
@@ -41,6 +42,127 @@ func save_rooms_data() -> bool:
     
     print("rooms.json ファイルを保存しました（", current_room.id, "のみ更新）")
     return true
+
+func append_experiment_result_csv(results: Dictionary) -> bool:
+    var result_path = Main.get_data_path(RESULT_CSV_PATH)
+    var output_dir = result_path.get_base_dir()
+    if not ensure_directory_exists(output_dir):
+        return false
+
+    var needs_header = not FileAccess.file_exists(result_path)
+    var file: FileAccess
+    if needs_header:
+        file = FileAccess.open(result_path, FileAccess.WRITE)
+    else:
+        file = FileAccess.open(result_path, FileAccess.READ_WRITE)
+
+    if not file:
+        var open_error = FileAccess.get_open_error()
+        push_error("result.csvを開けませんでした: %s (error: %s)" % [result_path, error_string(open_error)])
+        return false
+
+    if not needs_header:
+        file.seek_end()
+    else:
+        file.store_csv_line(get_result_csv_headers())
+
+    file.store_csv_line(build_result_csv_row(results))
+    var write_error = file.get_error()
+    file.close()
+
+    if write_error != OK:
+        push_error("result.csvの書き込みに失敗しました: %s (error: %s)" % [result_path, error_string(write_error)])
+        return false
+
+    print("実験結果CSVを保存しました: ", result_path)
+    return true
+
+func ensure_directory_exists(path: String) -> bool:
+    if DirAccess.dir_exists_absolute(path):
+        return true
+
+    var dir_error = DirAccess.make_dir_recursive_absolute(path)
+    if dir_error != OK:
+        push_error("outputフォルダを作成できませんでした: %s (error: %s)" % [path, error_string(dir_error)])
+        return false
+
+    return true
+
+func get_result_csv_headers() -> PackedStringArray:
+    return PackedStringArray([
+        "exported_at",
+        "mode",
+        "room_id",
+        "scenario_index",
+        "scenario_total",
+        "started_at",
+        "ended_at",
+        "duration_sec",
+        "final_seat_id",
+        "final_seat_display_name",
+        "final_seat_position_x",
+        "final_seat_position_y",
+        "final_seat_position_z",
+        "intimate_violations",
+        "intimate_penalty",
+        "seat_zone_status_json",
+        "current_zone_status_json",
+        "direction_status",
+        "direction_score"
+    ])
+
+func build_result_csv_row(results: Dictionary) -> PackedStringArray:
+    var final_seat_id = PlayerDataManager.get_final_seat_id()
+    var final_seat_position = PlayerDataManager.get_final_seat_position()
+    var scenario_index = ""
+    var scenario_total = ""
+
+    if GameStateManager.is_scenario_mode():
+        var progress = GameStateManager.get_scenario_progress()
+        scenario_index = str(int(progress.get("current_index", 0)) + 1)
+        scenario_total = str(progress.get("total_rooms", ""))
+
+    return PackedStringArray([
+        format_unix_datetime(Time.get_unix_time_from_system()),
+        GameStateManager.get_current_mode_name(),
+        get_result_room_id(),
+        scenario_index,
+        scenario_total,
+        format_unix_datetime(PlayerDataManager.seating_start_time),
+        format_unix_datetime(PlayerDataManager.seating_end_time),
+        str(PlayerDataManager.get_seating_duration()),
+        final_seat_id,
+        get_final_seat_display_name(final_seat_id),
+        str(final_seat_position.x),
+        str(final_seat_position.y),
+        str(final_seat_position.z),
+        str(results.get("intimate_violations", "")),
+        str(results.get("intimate_penalty", "")),
+        JSON.stringify(results.get("seat_zone_status", [])),
+        JSON.stringify(PlayerDataManager.get_current_zone_status()),
+        str(results.get("direction_status", "")),
+        str(results.get("direction_score", ""))
+    ])
+
+func get_result_room_id() -> String:
+    if GameStateManager.is_scenario_mode():
+        return GameStateManager.get_current_scenario_room_id()
+    return GameStateManager.get_selected_room_id()
+
+func get_final_seat_display_name(seat_id: String) -> String:
+    if seat_id.is_empty():
+        return ""
+
+    var seat = DataRepository.seat_repository.get_seat(seat_id)
+    if not seat:
+        return ""
+
+    return seat.display_name
+
+func format_unix_datetime(timestamp: float) -> String:
+    if timestamp <= 0.0:
+        return ""
+    return Time.get_datetime_string_from_unix_time(int(timestamp), true)
 
 func format_position_arrays(json_string: String) -> String:
     var regex = RegEx.new()

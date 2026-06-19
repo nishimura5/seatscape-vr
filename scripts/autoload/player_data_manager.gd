@@ -8,6 +8,7 @@ var final_seat_position: Vector3 = Vector3.ZERO
 var final_seat_zone_level: String = ""
 var seating_start_time: float = 0.0
 var seating_end_time: float = 0.0
+var is_result_exported: bool = false
 
 # ゾーン状態管理（統合機能）
 var current_zone_status: Dictionary = {}  # npc_id -> zone_level
@@ -57,6 +58,7 @@ func reset_data():
     current_zone_status.clear()
     seating_start_time = 0.0
     seating_end_time = 0.0
+    is_result_exported = false
     stop_movement_sampling()
 
 func log_player_movement(position: Vector3, timestamp: float):
@@ -122,6 +124,12 @@ func get_seating_duration() -> float:
     if seating_end_time > 0 and seating_start_time > 0:
         return seating_end_time - seating_start_time
     return 0.0
+
+func has_result_been_exported() -> bool:
+    return is_result_exported
+
+func mark_result_exported():
+    is_result_exported = true
 
 # === デバッグ関数 ===
 

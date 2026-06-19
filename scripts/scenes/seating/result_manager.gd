@@ -18,6 +18,7 @@ func calculate_results():
     calculate_intimate_violations()
     calculate_seat_zone_score()
     calculate_direction_score()
+    export_results_csv()
 
 func calculate_intimate_violations():
     var violation_count = PlayerDataManager.get_intimate_violations_count()
@@ -45,6 +46,15 @@ func calculate_direction_score():
     
     var facing_analysis = analyze_facing_situation(final_seat_id)
     results["direction_status"] = facing_analysis.status
+    results["direction_score"] = facing_analysis.score
+
+func export_results_csv():
+    if PlayerDataManager.has_result_been_exported():
+        return
+
+    var file_manager = FileManager.new()
+    if file_manager.append_experiment_result_csv(results):
+        PlayerDataManager.mark_result_exported()
 
 func analyze_facing_situation(seat_id: String) -> Dictionary:
     var seat = DataRepository.seat_repository.get_seat(seat_id)

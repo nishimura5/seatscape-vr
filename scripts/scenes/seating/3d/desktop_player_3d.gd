@@ -18,6 +18,7 @@ extends CharacterBody3D
 const WALK_SPEED = 1.0
 const SENSITIVITY = 0.002
 const GAMEPAD_SENSITIVITY = 2.0
+const SEATED_CAMERA_HEIGHT: float = 1.2
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 # Height adjustment
@@ -199,7 +200,9 @@ func start_sitting_animation(target_position: Vector3):
     is_camera_tweening = true
     hide_can_sit_down_icon()
     
-    var final_position = Vector3(target_position.x, -0.4, target_position.z)
+    var camera_offset_y = camera.global_position.y - global_position.y
+    var final_player_y = SEATED_CAMERA_HEIGHT - camera_offset_y
+    var final_position = Vector3(target_position.x, final_player_y, target_position.z)
     velocity = Vector3.ZERO
     seat_id = back_area_detector.get_current_seat_id()
     

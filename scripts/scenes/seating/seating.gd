@@ -43,8 +43,8 @@ func setup_player_mode():
         player_manager.remove_child(player_manager.get_node("XrPlayer3D"))
     PlayerDataManager.start_movement_sampling(player)
 
-    # head height offset 1.0m +/-
-    player.set_height(1.6)
+    # head height
+    player.set_height(GameStateManager.get_player_camera_height())
 
 func setup_connections():
     player.seating_completed.connect(_on_seating_completed)

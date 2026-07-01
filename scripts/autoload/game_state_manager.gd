@@ -16,8 +16,15 @@ enum GameMode {
     ROOM_EDIT
 }
 
+const DEFAULT_PLAYER_CAMERA_HEIGHT: float = 1.6
+const MIN_PLAYER_CAMERA_HEIGHT: float = 1.2
+const MAX_PLAYER_CAMERA_HEIGHT: float = 2.0
+
+signal player_camera_height_changed(height: float)
+
 var current_state: GameState = GameState.TITLE
 var current_mode: GameMode = GameMode.EXPERIMENT
+var player_camera_height: float = DEFAULT_PLAYER_CAMERA_HEIGHT
 var selected_room_id: String = ""
 var is_transitioning: bool = false
 var narrative_data: Dictionary = {}
@@ -48,6 +55,20 @@ func _on_room_selected(room_id: String):
 
 func _on_scene_changed(_scene_name: String):
     is_transitioning = false
+
+func get_player_camera_height() -> float:
+    return player_camera_height
+
+func set_player_camera_height(height: float):
+    var new_height: float = clamp(height, MIN_PLAYER_CAMERA_HEIGHT, MAX_PLAYER_CAMERA_HEIGHT)
+    if is_equal_approx(player_camera_height, new_height):
+        return
+
+    player_camera_height = new_height
+    player_camera_height_changed.emit(player_camera_height)
+
+func reset_player_camera_height():
+    set_player_camera_height(DEFAULT_PLAYER_CAMERA_HEIGHT)
 
 func transition_to(new_state: GameState):
     print("Transition requested: ", get_current_state_name(), " -> ", get_state_name(new_state))

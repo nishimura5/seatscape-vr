@@ -12,10 +12,15 @@ enum CameraMode {
     OVERVIEW_RESULT
 }
 
+const CAMERA_HEIGHT_STEP: float = 0.05
+const CAMERA_HEIGHT_DISPLAY_SECONDS: float = 2.0
+
 var current_camera_mode: CameraMode = CameraMode.FIRST_PERSON
 var is_personal_space_visible: bool = false
 var is_in_intimate_zone: bool = false
 var player: Node3D
+var camera_height_label: Label
+var camera_height_display_timer: Timer
 
 func _ready():
     EventBus.seating_started.emit()
@@ -25,6 +30,7 @@ func _ready():
     setup_player_mode()
     initialize_3d_scene()
     setup_connections()
+    setup_camera_height_display()
 
     show_initial_dialog()
 
@@ -59,6 +65,30 @@ func setup_connections():
 
     player.personal_space_detector.zone_entered.connect(_on_personal_space_entered)
     player.personal_space_detector.zone_exited.connect(_on_personal_space_exited)
+
+func setup_camera_height_display():
+    camera_height_label = Label.new()
+    camera_height_label.visible = false
+    camera_height_label.text = ""
+    camera_height_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+    camera_height_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+
+    camera_height_label.anchor_left = 0.5
+    camera_height_label.anchor_right = 0.5
+    camera_height_label.anchor_top = 0.0
+    camera_height_label.anchor_bottom = 0.0
+    camera_height_label.offset_left = -200
+    camera_height_label.offset_right = 200
+    camera_height_label.offset_top = 30
+    camera_height_label.offset_bottom = 70
+
+    $UIManager/UIOverlay.add_child(camera_height_label)
+
+    camera_height_display_timer = Timer.new()
+    camera_height_display_timer.one_shot = true
+    camera_height_display_timer.wait_time = CAMERA_HEIGHT_DISPLAY_SECONDS
+    camera_height_display_timer.timeout.connect(_on_camera_height_display_timeout)
+    add_child(camera_height_display_timer)
 
 func initialize_3d_scene():
     environment.setup_environment()
@@ -207,6 +237,12 @@ func cleanup_scene():
         Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _input(event):
+    if current_camera_mode == CameraMode.FIRST_PERSON and event is InputEventKey and event.pressed and not event.echo:
+        if event.keycode == KEY_J:
+            change_player_camera_height(-CAMERA_HEIGHT_STEP)
+        elif event.keycode == KEY_K:
+            change_player_camera_height(CAMERA_HEIGHT_STEP)
+
     match current_camera_mode:
         CameraMode.FIRST_PERSON:
             handle_first_person_input(event)
@@ -215,6 +251,30 @@ func _input(event):
 
     if event is InputEventKey and event.pressed and event.keycode == KEY_L:
         environment.test_lightmap_without_lights()
+
+func change_player_camera_height(delta: float):
+    var new_height: float = GameStateManager.get_player_camera_height() + delta
+    GameStateManager.set_player_camera_height(new_height)
+
+    var applied_height: float = GameStateManager.get_player_camera_height()
+    if player and player.has_method("set_height"):
+        player.set_height(applied_height)
+
+    show_camera_height_display(applied_height)
+
+func show_camera_height_display(height: float):
+    if not camera_height_label:
+        return
+
+    camera_height_label.text = "Camera height: %.2fm" % height
+    camera_height_label.visible = true
+
+    if camera_height_display_timer:
+        camera_height_display_timer.start(CAMERA_HEIGHT_DISPLAY_SECONDS)
+
+func _on_camera_height_display_timeout():
+    if camera_height_label:
+        camera_height_label.visible = false
 
 func handle_first_person_input(event):
     if event.is_action_pressed("ui_cancel") or (event is InputEventKey and event.pressed and event.keycode == KEY_Q):

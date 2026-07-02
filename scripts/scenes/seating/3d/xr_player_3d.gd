@@ -24,6 +24,7 @@ extends CharacterBody3D
 const WALK_SPEED = 1.0
 const ROTATION_SPEED = 1.1
 const SEATED_CAMERA_HEIGHT: float = 1.2
+const YAW_SYNC_EPSILON: float = 0.0001
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var ui_panel_material: StandardMaterial3D
@@ -159,6 +160,8 @@ func setup_connections():
 func _physics_process(delta):
     if not is_sitting and not is_camera_tweening and not is_dialog_active and not is_result_ui_active:
         handle_movement(delta)
+    elif not is_sitting and not is_camera_tweening:
+        sync_player_yaw_with_view()
     
     # ダイアログやResultUIが表示されていない時のみ、座席入力を処理
     if not is_dialog_active and not is_result_ui_active:
@@ -194,16 +197,16 @@ func handle_movement(delta):
     if right_input.length() > deadzone:
         var look_sensitivity = ROTATION_SPEED * delta
         xr_origin.rotate_y(-right_input.x * look_sensitivity)
-        pivot.rotate_y(-right_input.x * look_sensitivity)
 
-    # 移動処理 - XROrigin3Dの向きを基準にする
+    sync_player_yaw_with_view()
+
+    # Movement is relative to the player yaw synchronized from the current view.
     var move_input = Vector2.ZERO
     if abs(left_input.x) > deadzone or abs(left_input.y) > deadzone:
         move_input = left_input
     
     if move_input != Vector2.ZERO:
-        # XROrigin3Dの向きに対する相対的な移動方向を計算
-        var direction = (xr_origin.transform.basis * Vector3(move_input.x, 0, -move_input.y)).normalized()
+        var direction = (global_transform.basis * Vector3(move_input.x, 0, -move_input.y)).normalized()
         velocity.x = direction.x * WALK_SPEED
         velocity.z = direction.z * WALK_SPEED
     else:
@@ -212,6 +215,25 @@ func handle_movement(delta):
         velocity.z = move_toward(velocity.z, 0, WALK_SPEED * delta * 3)
     
     move_and_slide()
+
+func sync_player_yaw_with_view():
+    var target_yaw = get_camera_yaw()
+    var yaw_delta = wrapf(target_yaw - rotation.y, -PI, PI)
+    if abs(yaw_delta) < YAW_SYNC_EPSILON:
+        return
+
+    rotation.y = wrapf(rotation.y + yaw_delta, -PI, PI)
+    xr_origin.rotate_y(-yaw_delta)
+    pivot.rotation.y = 0.0
+
+func get_camera_yaw() -> float:
+    var forward = -camera.global_transform.basis.z
+    forward.y = 0.0
+    if forward.length_squared() < 0.000001:
+        return rotation.y
+
+    forward = forward.normalized()
+    return atan2(-forward.x, -forward.z)
 
 func set_height(target_height: float):
     target_camera_height = target_height
@@ -359,9 +381,10 @@ func setup_initial_position():
     var room = DataRepository.room_repository.get_current_room()
     if room:
         global_position = room.player_spawn_position
-        xr_origin.rotation_degrees.y = -room.player_spawn_rotation
-        pivot.rotation_degrees.y = -room.player_spawn_rotation
-    print("Initial position set to: ", global_position, " with rotation: ", xr_origin.rotation_degrees.y)
+        rotation_degrees.y = -room.player_spawn_rotation
+        xr_origin.rotation_degrees.y = 0.0
+        pivot.rotation_degrees.y = 0.0
+    print("Initial position set to: ", global_position, " with rotation: ", rotation_degrees.y)
 
 func get_seat_id() -> String:
     return seat_id

@@ -4,7 +4,7 @@ extends CharacterBody3D
 @onready var player_model: Node3D = $player
 @onready var head: Node3D = $XROrigin3D/Head
 @onready var xr_origin: XROrigin3D = $XROrigin3D
-@onready var camera: Camera3D = $XROrigin3D/Head/XRCamera3D
+@onready var camera: Camera3D = $XROrigin3D/XRCamera3D
 @onready var left_controller: XRController3D = $XROrigin3D/LeftController
 @onready var right_controller: XRController3D = $XROrigin3D/RightController
 @onready var pivot: Node3D = $Pivot
@@ -25,13 +25,18 @@ const WALK_SPEED = 1.0
 const ROTATION_SPEED = 1.1
 const SEATED_CAMERA_HEIGHT: float = 1.2
 const YAW_SYNC_EPSILON: float = 0.0001
+const HEIGHT_APPLY_EPSILON: float = 0.0001
+const CAMERA_HEIGHT_LABEL_DISTANCE: float = 1.4
+const CAMERA_HEIGHT_LABEL_Y_OFFSET: float = 0.28
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var ui_panel_material: StandardMaterial3D
 
 # Height adjustment
 var target_camera_height: float = 1.0
-var offset_height = 0.0
+var offset_height: float = 0.0
+var camera_height_label: Label3D
+var camera_height_display_timer: Timer
 
 # Sitting state
 var is_sitting: bool = false
@@ -59,6 +64,7 @@ func _ready():
     setup_wait_timer()
     add_to_group("player")
     setup_ui()
+    setup_camera_height_display()
     setup_dialog_system()
     setup_result_ui()
     print("Ready to play!")
@@ -115,6 +121,26 @@ func setup_ui():
 
     call_deferred("apply_viewport_texture")
 
+func setup_camera_height_display():
+    camera_height_label = Label3D.new()
+    camera_height_label.name = "CameraHeightLabel"
+    camera_height_label.visible = false
+    camera_height_label.position = Vector3(0.0, CAMERA_HEIGHT_LABEL_Y_OFFSET, -CAMERA_HEIGHT_LABEL_DISTANCE)
+    camera_height_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+    camera_height_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+    camera_height_label.font_size = 48
+    camera_height_label.pixel_size = 0.001
+    camera_height_label.modulate = Color.WHITE
+    camera_height_label.outline_modulate = Color(0.0, 0.0, 0.0, 0.85)
+    camera_height_label.outline_size = 8
+    camera_height_label.no_depth_test = true
+    camera.add_child(camera_height_label)
+
+    camera_height_display_timer = Timer.new()
+    camera_height_display_timer.one_shot = true
+    camera_height_display_timer.timeout.connect(_on_camera_height_display_timeout)
+    add_child(camera_height_display_timer)
+
 func setup_dialog_system():
     """ダイアログシステムのXR設定"""
     if dialog_system:
@@ -157,7 +183,12 @@ func setup_connections():
     back_area_detector.seat_available.connect(_on_seat_available)
     back_area_detector.seat_unavailable.connect(_on_seat_unavailable)
 
+func _process(_delta):
+    apply_fixed_camera_height()
+
 func _physics_process(delta):
+    apply_fixed_camera_height()
+
     if not is_sitting and not is_camera_tweening and not is_dialog_active and not is_result_ui_active:
         handle_movement(delta)
     elif not is_sitting and not is_camera_tweening:
@@ -237,13 +268,35 @@ func get_camera_yaw() -> float:
 
 func set_height(target_height: float):
     target_camera_height = target_height
-    offset_height = target_height - camera.global_position.y
-    apply_height_offset()
+    apply_fixed_camera_height()
 
-func apply_height_offset():
-    xr_origin.position.y = offset_height
-    head.position.y = target_camera_height - offset_height
-    print("camera global position: ", camera.global_position.y, "(", xr_origin.position.y, ") ", head.position.y)
+func apply_fixed_camera_height():
+    var height_delta := target_camera_height - get_current_camera_height()
+    if abs(height_delta) > HEIGHT_APPLY_EPSILON:
+        xr_origin.position.y += height_delta
+
+    offset_height = xr_origin.position.y
+    update_head_height_anchor()
+
+func get_current_camera_height() -> float:
+    return camera.global_position.y - global_position.y
+
+func update_head_height_anchor():
+    head.position.y = target_camera_height - xr_origin.position.y
+
+func show_camera_height_display(height: float, display_seconds: float):
+    if not camera_height_label:
+        return
+
+    camera_height_label.text = "Camera height: %.2fm" % height
+    camera_height_label.visible = true
+
+    if camera_height_display_timer:
+        camera_height_display_timer.start(display_seconds)
+
+func _on_camera_height_display_timeout():
+    if camera_height_label:
+        camera_height_label.visible = false
 
 # ダイアログ制御メソッド
 func show_dialog(dialog_key: String):

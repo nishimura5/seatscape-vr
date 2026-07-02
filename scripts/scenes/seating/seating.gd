@@ -260,7 +260,15 @@ func change_player_camera_height(delta: float):
     if player and player.has_method("set_height"):
         player.set_height(applied_height)
 
-    show_camera_height_display(applied_height)
+    var current_height := get_current_player_camera_height(applied_height)
+    show_camera_height_display(current_height)
+    if player and player.has_method("show_camera_height_display"):
+        player.show_camera_height_display(current_height, CAMERA_HEIGHT_DISPLAY_SECONDS)
+
+func get_current_player_camera_height(fallback_height: float) -> float:
+    if player and player.has_method("get_current_camera_height"):
+        return player.get_current_camera_height()
+    return fallback_height
 
 func show_camera_height_display(height: float):
     if not camera_height_label:

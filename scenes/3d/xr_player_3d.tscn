@@ -72,9 +72,9 @@ mesh = SubResource("QuadMesh_udnlm")
 [node name="DissolveOverlayMesh" type="MeshInstance3D" parent="XROrigin3D/Head"]
 visible = false
 mesh = SubResource("SphereMesh_udnlm")
-skeleton = NodePath("../XRCamera3D")
+skeleton = NodePath("../../XRCamera3D")
 
-[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D/Head"]
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
 
 [node name="LeftController" type="XRController3D" parent="XROrigin3D"]
 tracker = &"left_hand"

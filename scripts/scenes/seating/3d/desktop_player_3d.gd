@@ -157,6 +157,9 @@ func set_height(target_height: float):
 func apply_height_offset():
     head.position.y = target_camera_height
 
+func get_current_camera_height() -> float:
+    return camera.global_position.y - global_position.y
+
 func show_dialog(dialog_key: String):
     DialogManager.start_dialog(dialog_key, dialog_system)
 

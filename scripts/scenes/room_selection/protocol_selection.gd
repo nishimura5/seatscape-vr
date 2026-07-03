@@ -7,6 +7,7 @@ extends Control
 @onready var xr_ui_panel: Node3D = $XRUI/UIPanel
 @onready var panel_mesh: MeshInstance3D = $XRUI/UIPanel/PanelMesh
 
+@onready var protocol_scroll_container: ScrollContainer = $SharedUI/CenterContainer/MainHBoxContainer/VBoxContainer/ScrollContainer
 @onready var protocol_buttons_container: VBoxContainer = $SharedUI/CenterContainer/MainHBoxContainer/VBoxContainer/ScrollContainer/ProtocolOptionsContainer
 @onready var confirm_button: Button = $SharedUI/CenterContainer/MainHBoxContainer/ConfirmButton
 @onready var back_to_title_button: Button = $SharedUI/CenterContainer/MainHBoxContainer/BackToTitleButton
@@ -27,6 +28,7 @@ var protocols: Dictionary = {}
 var is_xr_mode: bool = false
 var ui_panel_material: StandardMaterial3D
 var xr_button_focus: XRButtonFocus
+var last_scroll_synced_button: Button = null
 
 func _ready():
     setup_mode()
@@ -188,6 +190,20 @@ func show_initial_dialog():
 func _process(_delta):
     if is_xr_mode and xr_button_focus:
         xr_button_focus.process_input()
+        sync_scroll_to_xr_focus()
+
+func sync_scroll_to_xr_focus():
+    var focused_button = xr_button_focus.get_current_focused_button()
+    if focused_button == last_scroll_synced_button:
+        return
+
+    last_scroll_synced_button = focused_button
+    if not is_instance_valid(focused_button):
+        return
+    if not protocol_scroll_container.is_ancestor_of(focused_button):
+        return
+
+    protocol_scroll_container.ensure_control_visible(focused_button)
 
 func _on_xr_button_activated(button: Button):
     """XRモードでボタンが有効化された時の処理"""

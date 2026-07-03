@@ -185,6 +185,7 @@ func setup_connections():
 
 func _process(_delta):
     apply_fixed_camera_height()
+    sync_head_with_camera()
 
 func _physics_process(delta):
     apply_fixed_camera_height()
@@ -201,6 +202,8 @@ func _physics_process(delta):
     # ResultUIが表示されている時の入力処理
     if is_result_ui_active:
         handle_result_ui_input()
+
+    sync_head_with_camera()
 
 func handle_input():
     """XR入力の処理"""
@@ -276,13 +279,15 @@ func apply_fixed_camera_height():
         xr_origin.position.y += height_delta
 
     offset_height = xr_origin.position.y
-    update_head_height_anchor()
+    sync_head_with_camera()
 
 func get_current_camera_height() -> float:
     return camera.global_position.y - global_position.y
 
-func update_head_height_anchor():
-    head.position.y = target_camera_height - xr_origin.position.y
+func sync_head_with_camera():
+    if head and camera:
+        # Head is the UI anchor; copy the tracked HMD pose so child UI follows it.
+        head.global_transform = camera.global_transform
 
 func show_camera_height_display(height: float, display_seconds: float):
     if not camera_height_label:
@@ -403,16 +408,12 @@ func start_sitting_animation(target_position: Vector3):
     velocity = Vector3.ZERO
     seat_id = back_area_detector.get_current_seat_id()
     
-    var current_head_rotation = head.rotation
-    var target_rotation = Vector3(0.0, current_head_rotation.y, current_head_rotation.z)
-    
     var tween = create_tween()
     tween.set_ease(Tween.EASE_OUT)
     tween.set_trans(Tween.TRANS_CUBIC)
     tween.set_parallel(true)
     
     tween.tween_property(self, "global_position", final_position, 1.5)
-    tween.tween_property(head, "rotation", target_rotation, 1.5)
     tween.tween_callback(_on_sitting_animation_completed)
 
 func show_can_sit_down_icon():
